@@ -1,483 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>For Immaculate ❤️</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@600&display=swap');
-
-  body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #f5c6ec 0%, #f8e9ff 100%);
-    font-family: 'Poppins', sans-serif;
-    color: #b33a6c;
-    overflow: hidden;
-    position: relative;
-    text-align: center;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
-    padding: 20px;
-    filter: brightness(0.95);
-  }
-
-  .initials {
-    position: fixed;
-    top: 10vh;
-    left: 5vw;
-    font-family: 'Great Vibes', cursive;
-    font-size: 4rem;
-    color: rgba(179, 58, 108, 0.15);
-    user-select: none;
-    pointer-events: none;
-    animation: floatInitials 8s ease-in-out infinite alternate;
-    z-index: 0;
-  }
-  .initials.right {
-    left: auto;
-    right: 5vw;
-    animation-delay: 4s;
-  }
-  @keyframes floatInitials {
-    0% { transform: translateY(0) translateX(0); }
-    100% { transform: translateY(20px) translateX(15px); }
-  }
-
-  .heart {
-    font-size: 5rem;
-    margin: 15px 0;
-    animation: bouncePulse 1.5s infinite, candleFlicker 3s infinite;
-    user-select: none;
-    text-shadow:
-      0 0 8px #de4c8a,
-      0 0 15px #b33a6c,
-      0 0 20px #b33a6c;
-    z-index: 2;
-  }
-
-  @keyframes candleFlicker {
-    0%, 100% { text-shadow: 0 0 8px #de4c8a, 0 0 15px #b33a6c, 0 0 20px #b33a6c; }
-    50% { text-shadow: 0 0 15px #ffafcc, 0 0 20px #f48fb1, 0 0 30px #ffafcc; }
-  }
-
-  #typed-text {
-    font-family: 'Great Vibes', cursive;
-    font-size: 3rem;
-    margin: 0;
-    text-shadow: 0 2px 6px rgba(179, 58, 108, 0.5);
-    line-height: 1.2;
-    min-height: 3.5rem;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: .15em solid #b33a6c;
-    animation: typing 4s steps(28), blinkCaret 0.75s step-end infinite;
-    z-index: 2;
-  }
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-  }
-  @keyframes blinkCaret {
-    50% { border-color: transparent; }
-    100% { border-color: #b33a6c; }
-  }
-
-  p {
-    font-size: 1.3rem;
-    margin: 10px 0 0 0;
-    font-style: italic;
-    letter-spacing: 1px;
-    z-index: 2;
-  }
-
-  footer {
-    position: absolute;
-    bottom: 15px;
-    font-size: 1rem;
-    color: #8a2e54;
-    font-style: italic;
-    user-select: none;
-    z-index: 2;
-  }
-
-  #whatsapp-btn {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background-color: #25d366;
-    color: white;
-    font-size: 2.5rem;
-    border-radius: 50%;
-    padding: 12px 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    user-select: none;
-    z-index: 10001;
-  }
-  #whatsapp-btn:hover {
-    background-color: #1ebe57;
-  }
-
-  #dark-mode-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-    user-select: none;
-    color: #b33a6c;
-    z-index: 10001;
-    transition: color 0.3s ease;
-  }
-  #dark-mode-toggle:hover {
-    color: #de4c8a;
-  }
-
-  body.dark {
-    background: #1e1e2f;
-    color: #f0e6f6;
-    filter: brightness(0.9);
-  }
-  body.dark h1, body.dark p, body.dark footer {
-    text-shadow: none;
-  }
-  body.dark .heart {
-    text-shadow:
-      0 0 8px #ff5c8d,
-      0 0 15px #ff4c78,
-      0 0 20px #ff4c78;
-  }
-  body.dark #whatsapp-btn {
-    background-color: #128c7e;
-  }
-  body.dark #whatsapp-btn:hover {
-    background-color: #0f7a68;
-  }
-
-  @keyframes bouncePulse {
-    0%, 100% {
-      transform: translateY(0) scale(1);
-    }
-    50% {
-      transform: translateY(-12px) scale(1.1);
-    }
-  }
-
-  @keyframes fadeIn {
-    to {opacity: 1;}
-  }
-
-  /* Confetti */
-  .confetti {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background-color: #de4c8a;
-    opacity: 0.8;
-    animation: fall 7s linear infinite;
-    border-radius: 3px;
-    pointer-events: none;
-    will-change: transform;
-    z-index: 0;
-  }
-  @keyframes fall {
-    0% {
-      transform: translateY(-10vh) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(110vh) rotate(360deg);
-      opacity: 0;
-    }
-  }
-
-  /* Shooting stars */
-  .shooting-star {
-    position: fixed;
-    width: 3px;
-    height: 80px;
-    background: linear-gradient(-45deg, white, rgba(255,255,255,0));
-    top: -100px;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: shooting-star 2s linear infinite;
-    pointer-events: none;
-    filter: drop-shadow(0 0 2px white);
-    z-index: 0;
-  }
-  @keyframes shooting-star {
-    0% {
-      transform: translateX(0) translateY(0) rotate(45deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(100vw) translateY(100vh) rotate(45deg);
-      opacity: 0;
-    }
-  }
-
-  /* Burst confetti animation */
-  @keyframes burst {
-    to {
-      opacity: 0;
-      transform: translate(var(--x), var(--y));
-    }
-  }
-
-  /* Floating glowing orbs */
-  .orb {
-    position: fixed;
-    bottom: -40px;
-    width: 15px;
-    height: 15px;
-    background: rgba(255, 182, 193, 0.6);
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
-    pointer-events: none;
-    animation: floatUp linear infinite;
-    filter: blur(2px);
-    z-index: 0;
-    opacity: 0.7;
-  }
-  @keyframes floatUp {
-    0% {
-      transform: translateY(0) translateX(0) scale(1);
-      opacity: 0.7;
-    }
-    100% {
-      transform: translateY(-120vh) translateX(30px) scale(1.3);
-      opacity: 0;
-    }
-  }
-
-  /* Surprise box styles */
-  #surprise-box {
-    position: fixed;
-    bottom: 100px;
-    right: 25px;
-    width: 60px;
-    height: 60px;
-    background: #de4c8a;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(179, 58, 108, 0.7);
-    cursor: pointer;
-    user-select: none;
-    z-index: 10001;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 1.8rem;
-    transition: background-color 0.3s ease;
-  }
-  #surprise-box:hover {
-    background-color: #b33a6c;
-  }
-
-  #surprise-note {
-    position: fixed;
-    bottom: 170px;
-    right: 25px;
-    max-width: 220px;
-    padding: 15px;
-    background: rgba(255, 240, 245, 0.95);
-    color: #b33a6c;
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(179, 58, 108, 0.4);
-    user-select: none;
-    display: none;
-    z-index: 10002;
-  }
-
-  /* Responsive for phones */
-  @media (max-width: 480px) {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For Immaculate ❤️</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
     body {
-      padding: 10px;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #f5c6ec 0%, #f8e9ff 100%);
+      font-family: 'Playfair Display', serif;
+      color: #b33a6c;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
     }
     h1 {
-      font-size: 1.8rem;
-    }
-    #typed-text {
-      font-size: 1.5rem;
-      border-right-width: 2px;
+      font-size: 3.5rem;
+      margin: 0;
+      animation: pulse 2s infinite;
+      text-shadow: 0 2px 6px rgba(179, 58, 108, 0.5);
     }
     .heart {
-      font-size: 3.5rem;
-      animation-duration: 2.5s;
+      font-size: 6rem;
+      margin: 15px 0;
+      animation: bouncePulse 1.5s infinite;
+      user-select: none;
     }
     p {
-      font-size: 1rem;
-    }
-    #whatsapp-btn {
-      font-size: 1.8rem;
-      padding: 10px 12px;
-      bottom: 15px;
-      right: 15px;
-    }
-    #dark-mode-toggle {
-      font-size: 1.5rem;
-      top: 15px;
-      right: 15px;
-    }
-    .confetti {
-      width: 4px;
-      height: 4px;
-      animation-duration: 12s;
+      font-size: 1.7rem;
+      margin: 10px 0 0 0;
+      font-style: italic;
+      letter-spacing: 1px;
     }
     footer {
-      font-size: 0.9rem;
-      bottom: 8px;
+      position: absolute;
+      bottom: 15px;
+      font-size: 1rem;
+      color: #8a2e54;
+      font-style: italic;
+      user-select: none;
     }
-    .orb {
-      width: 8px !important;
-      height: 8px !important;
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        color: #b33a6c;
+      }
+      50% {
+        transform: scale(1.1);
+        color: #de4c8a;
+      }
     }
-  }
-</style>
+    @keyframes bouncePulse {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-15px) scale(1.1);
+      }
+    }
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #de4c8a;
+      opacity: 0.8;
+      animation: fall 5s linear infinite;
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body>
-  <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">🌙</button>
-
-  <div class="initials" style="left:5vw; top:10vh;">I</div>
-  <div class="initials right" style="right:5vw; top:15vh;">P</div>
-
-  <h1 id="typed-text"></h1>
+  <h1>Immaculate, I love you so much</h1>
   <div class="heart">❤️</div>
   <p>Forever and always.</p>
   <footer>Made with ❤️ for Immaculate</footer>
 
-  <a href="https://wa.me/254715306691" target="_blank" id="whatsapp-btn" aria-label="Chat on WhatsApp">💬</a>
-
-  <div id="surprise-box" title="Click for a surprise">🎁</div>
-  <div id="surprise-note">You are my everything, Immaculate ❤️</div>
-
   <script>
-    // Typing effect - reset content before typing
-    const message = "Immaculate, I love you so much";
-    const typedText = document.getElementById('typed-text');
-    let index = 0;
-
-    function type() {
-      if (index < message.length) {
-        typedText.textContent += message.charAt(index);
-        index++;
-        setTimeout(type, 100);
-      }
-    }
-
-    window.onload = () => {
-      typedText.textContent = '';  // Clear before typing to avoid duplication
-      type();
-
-      // Load dark mode state from localStorage
-      if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark');
-        document.getElementById('dark-mode-toggle').textContent = '☀️';
-      }
-    };
-
-    // Dark mode toggle with persistence
-    const toggle = document.getElementById('dark-mode-toggle');
-    toggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      const isDark = document.body.classList.contains('dark');
-      toggle.textContent = isDark ? '☀️' : '🌙';
-      localStorage.setItem('darkMode', isDark);
-    });
-
-    // Confetti falling
+    // Create confetti pieces dynamically
     const confettiCount = 30;
     for(let i = 0; i < confettiCount; i++) {
       const confetti = document.createElement('div');
       confetti.classList.add('confetti');
       confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.animationDuration = (7 + Math.random() * 3) + 's';
-      confetti.style.animationDelay = (Math.random() * 7) + 's';
+      confetti.style.animationDuration = (3 + Math.random() * 3) + 's';
+      confetti.style.animationDelay = (Math.random() * 5) + 's';
       confetti.style.backgroundColor = `hsl(${330 + Math.random()*30}, 70%, 70%)`;
-      confetti.style.width = confetti.style.height = (5 + Math.random()*3) + 'px';
+      confetti.style.width = confetti.style.height = (5 + Math.random()*5) + 'px';
       document.body.appendChild(confetti);
-    }
-
-    // Shooting stars
-    function createShootingStar() {
-      const star = document.createElement('div');
-      star.classList.add('shooting-star');
-      star.style.left = Math.random() * window.innerWidth + 'px';
-      star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
-      star.style.animationDuration = (1.5 + Math.random() * 1) + 's';
-      document.body.appendChild(star);
-      star.addEventListener('animationend', () => star.remove());
-    }
-    setInterval(createShootingStar, 1000);
-
-    // Click-to-explode confetti only if click is outside interactive elements
-    function createBurstConfetti(x, y) {
-      const colors = ['#de4c8a', '#f48fb1', '#b33a6c', '#ffafcc', '#f8bbd0'];
-      for(let i = 0; i < 30; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti');
-        confetti.style.left = x + 'px';
-        confetti.style.top = y + 'px';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.width = confetti.style.height = (5 + Math.random() * 5) + 'px';
-        confetti.style.position = 'fixed';
-        confetti.style.opacity = '1';
-        confetti.style.borderRadius = '3px';
-        confetti.style.pointerEvents = 'none';
-        confetti.style.animation = `burst 700ms forwards ease-out`;
-        document.body.appendChild(confetti);
-        const angle = Math.random() * 2 * Math.PI;
-        const distance = 100 + Math.random() * 100;
-        confetti.animate([
-          { transform: 'translate(0, 0)', opacity: 1 },
-          { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`, opacity: 0 }
-        ], {
-          duration: 700,
-          easing: 'ease-out',
-          fill: 'forwards'
-        });
-        setTimeout(() => confetti.remove(), 700);
-      }
-    }
-
-    document.body.addEventListener('click', (e) => {
-      // Prevent confetti burst if clicking on buttons or links
-      if (e.target.closest('button, a, #surprise-box')) return;
-      createBurstConfetti(e.clientX, e.clientY);
-    });
-
-    // Surprise box toggle
-    const surpriseBox = document.getElementById('surprise-box');
-    const surpriseNote = document.getElementById('surprise-note');
-    surpriseBox.addEventListener('click', () => {
-      surpriseNote.style.display = surpriseNote.style.display === 'block' ? 'none' : 'block';
-    });
-
-    // Floating glowing orbs
-    const orbCount = 15;
-    for(let i=0; i < orbCount; i++) {
-      const orb = document.createElement('div');
-      orb.classList.add('orb');
-      orb.style.left = Math.random() * 100 + 'vw';
-      orb.style.animationDuration = (12 + Math.random() * 8) + 's';
-      orb.style.animationDelay = (Math.random() * 12) + 's';
-      orb.style.width = orb.style.height = (10 + Math.random()*10) + 'px';
-      orb.style.opacity = 0.6 + Math.random() * 0.4;
-      document.body.appendChild(orb);
     }
   </script>
 </body>
