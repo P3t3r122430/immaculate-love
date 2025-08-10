@@ -1,111 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>For Immaculate ❤️</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #f5c6ec 0%, #f8e9ff 100%);
-      font-family: 'Playfair Display', serif;
-      color: #b33a6c;
-      overflow: hidden;
-      position: relative;
-      text-align: center;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>For Immaculate ❤️</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@600&display=swap');
+
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5c6ec 0%, #f8e9ff 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #b33a6c;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Big faded initial watermark */
+  .watermark {
+    position: absolute;
+    font-family: 'Great Vibes', cursive;
+    font-size: 30vw;
+    color: rgba(179, 58, 108, 0.08);
+    user-select: none;
+    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: -0.05em;
+    z-index: 0;
+  }
+
+  /* Vertical stacked name container */
+  .vertical-name {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    font-weight: 700;
+    font-size: 3.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    user-select: none;
+  }
+
+  /* Each letter styling */
+  .vertical-name span {
+    transform-origin: center;
+    transition: transform 0.3s ease, color 0.3s ease;
+    cursor: default;
+  }
+
+  /* On hover, subtle scale & color pop */
+  .vertical-name span:hover {
+    transform: scale(1.3);
+    color: #de4c8a;
+  }
+
+  /* Responsive scaling for phones */
+  @media (max-width: 480px) {
+    .watermark {
+      font-size: 50vw;
     }
-    h1 {
-      font-size: 3.5rem;
-      margin: 0;
-      animation: pulse 2s infinite;
-      text-shadow: 0 2px 6px rgba(179, 58, 108, 0.5);
+    .vertical-name {
+      font-size: 2.2rem;
+      letter-spacing: 0.1em;
+      gap: 0.25em;
     }
-    .heart {
-      font-size: 6rem;
-      margin: 15px 0;
-      animation: bouncePulse 1.5s infinite;
-      user-select: none;
-    }
-    p {
-      font-size: 1.7rem;
-      margin: 10px 0 0 0;
-      font-style: italic;
-      letter-spacing: 1px;
-    }
-    footer {
-      position: absolute;
-      bottom: 15px;
-      font-size: 1rem;
-      color: #8a2e54;
-      font-style: italic;
-      user-select: none;
-    }
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-        color: #b33a6c;
-      }
-      50% {
-        transform: scale(1.1);
-        color: #de4c8a;
-      }
-    }
-    @keyframes bouncePulse {
-      0%, 100% {
-        transform: translateY(0) scale(1);
-      }
-      50% {
-        transform: translateY(-15px) scale(1.1);
-      }
-    }
-    /* Confetti */
-    .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: #de4c8a;
-      opacity: 0.8;
-      animation: fall 5s linear infinite;
-      border-radius: 3px;
-      pointer-events: none;
-    }
-    @keyframes fall {
-      0% {
-        transform: translateY(-10vh) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <h1>Immaculate, I love you so much</h1>
-  <div class="heart">❤️</div>
-  <p>Forever and always.</p>
-  <footer>Made with ❤️ for Immaculate</footer>
-
-  <script>
-    // Create confetti pieces dynamically
-    const confettiCount = 30;
-    for(let i = 0; i < confettiCount; i++) {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti');
-      confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.animationDuration = (3 + Math.random() * 3) + 's';
-      confetti.style.animationDelay = (Math.random() * 5) + 's';
-      confetti.style.backgroundColor = `hsl(${330 + Math.random()*30}, 70%, 70%)`;
-      confetti.style.width = confetti.style.height = (5 + Math.random()*5) + 'px';
-      document.body.appendChild(confetti);
-    }
-  </script>
+  <div class="watermark">I</div>
+  <div class="vertical-name" aria-label="Immaculate">
+    <span>I</span>
+    <span>M</span>
+    <span>M</span>
+    <span>A</span>
+    <span>C</span>
+    <span>U</span>
+    <span>L</span>
+    <span>A</span>
+    <span>T</span>
+    <span>E</span>
+  </div>
 </body>
 </html>
