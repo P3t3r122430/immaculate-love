@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>For Immaculate ❤️</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
     body {
       margin: 0;
       height: 100vh;
@@ -14,26 +14,34 @@
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #f5c6ec 0%, #f8e9ff 100%);
-      font-family: 'Playfair Display', serif;
+      font-family: 'Poppins', sans-serif;
       color: #b33a6c;
       overflow: hidden;
       position: relative;
       text-align: center;
+      opacity: 0;
+      animation: fadeIn 1.5s forwards;
+      padding: 20px;
     }
     h1 {
-      font-size: 3.5rem;
+      font-size: 3rem;
       margin: 0;
       animation: pulse 2s infinite;
       text-shadow: 0 2px 6px rgba(179, 58, 108, 0.5);
+      line-height: 1.2;
     }
     .heart {
-      font-size: 6rem;
+      font-size: 5rem;
       margin: 15px 0;
       animation: bouncePulse 1.5s infinite;
       user-select: none;
+      text-shadow:
+        0 0 8px #de4c8a,
+        0 0 15px #de4c8a,
+        0 0 20px #b33a6c;
     }
     p {
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       margin: 10px 0 0 0;
       font-style: italic;
       letter-spacing: 1px;
@@ -61,19 +69,23 @@
         transform: translateY(0) scale(1);
       }
       50% {
-        transform: translateY(-15px) scale(1.1);
+        transform: translateY(-12px) scale(1.1);
       }
+    }
+    @keyframes fadeIn {
+      to {opacity: 1;}
     }
     /* Confetti */
     .confetti {
       position: fixed;
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       background-color: #de4c8a;
       opacity: 0.8;
-      animation: fall 5s linear infinite;
+      animation: fall 7s linear infinite;
       border-radius: 3px;
       pointer-events: none;
+      will-change: transform;
     }
     @keyframes fall {
       0% {
@@ -83,6 +95,28 @@
       100% {
         transform: translateY(110vh) rotate(360deg);
         opacity: 0;
+      }
+    }
+    /* Responsive */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .heart {
+        font-size: 4rem;
+        animation-duration: 2s;
+      }
+      p {
+        font-size: 1rem;
+      }
+      .confetti {
+        width: 5px;
+        height: 5px;
+        animation-duration: 10s;
+      }
+      footer {
+        font-size: 0.9rem;
+        bottom: 10px;
       }
     }
   </style>
@@ -100,10 +134,10 @@
       const confetti = document.createElement('div');
       confetti.classList.add('confetti');
       confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.animationDuration = (3 + Math.random() * 3) + 's';
-      confetti.style.animationDelay = (Math.random() * 5) + 's';
+      confetti.style.animationDuration = (7 + Math.random() * 3) + 's';
+      confetti.style.animationDelay = (Math.random() * 7) + 's';
       confetti.style.backgroundColor = `hsl(${330 + Math.random()*30}, 70%, 70%)`;
-      confetti.style.width = confetti.style.height = (5 + Math.random()*5) + 'px';
+      confetti.style.width = confetti.style.height = (5 + Math.random()*3) + 'px';
       document.body.appendChild(confetti);
     }
   </script>
