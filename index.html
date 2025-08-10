@@ -11,6 +11,7 @@
     margin: 0;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #f5c6ec 0%, #f8e9ff 100%);
@@ -55,7 +56,7 @@
   }
 
   .vertical-name span:hover {
-    transform: scale(1.3);
+    transform: scale(1.4) rotate(10deg);
     color: #de4c8a;
   }
 
@@ -67,6 +68,41 @@
     margin-left: 40px;
     color: #b33a6c;
     user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 0.15em solid #b33a6c;
+    width: 0;
+    animation: typing 3s steps(15) forwards, blinkCaret 0.75s step-end infinite;
+  }
+
+  footer {
+    margin-top: 40px;
+    font-style: italic;
+    color: #8a2e54;
+    user-select: none;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    opacity: 0;
+    animation: fadeInFooter 2s ease forwards;
+    animation-delay: 3.5s;
+  }
+
+  @keyframes typing {
+    to {
+      width: 12ch;
+    }
+  }
+
+  @keyframes blinkCaret {
+    50% {
+      border-color: transparent;
+    }
+  }
+
+  @keyframes fadeInFooter {
+    to {
+      opacity: 1;
+    }
   }
 
   @media (max-width: 480px) {
@@ -80,6 +116,13 @@
     .message {
       font-size: 2.2rem;
       margin-left: 20px;
+      width: 0;
+      animation: typing 3s steps(15) forwards, blinkCaret 0.75s step-end infinite;
+    }
+    footer {
+      font-size: 0.9rem;
+      margin-top: 30px;
+      animation-delay: 3.5s;
     }
   }
 </style>
@@ -95,5 +138,6 @@
     </div>
     <div class="message">I love you ❤️</div>
   </div>
+  <footer>Made with ❤️ for Emma</footer>
 </body>
 </html>
