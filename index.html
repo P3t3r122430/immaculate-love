@@ -6,6 +6,7 @@
   <title>For Immaculate ❤️</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
     body {
       margin: 0;
       height: 100vh;
@@ -22,14 +23,16 @@
       opacity: 0;
       animation: fadeIn 1.5s forwards;
       padding: 20px;
+      transition: background 0.5s, color 0.5s;
     }
+
     h1 {
       font-size: 3rem;
       margin: 0;
-      animation: pulse 2s infinite;
       text-shadow: 0 2px 6px rgba(179, 58, 108, 0.5);
       line-height: 1.2;
     }
+
     .heart {
       font-size: 5rem;
       margin: 15px 0;
@@ -37,15 +40,17 @@
       user-select: none;
       text-shadow:
         0 0 8px #de4c8a,
-        0 0 15px #de4c8a,
+        0 0 15px #b33a6c,
         0 0 20px #b33a6c;
     }
+
     p {
       font-size: 1.3rem;
       margin: 10px 0 0 0;
       font-style: italic;
       letter-spacing: 1px;
     }
+
     footer {
       position: absolute;
       bottom: 15px;
@@ -54,16 +59,73 @@
       font-style: italic;
       user-select: none;
     }
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-        color: #b33a6c;
-      }
-      50% {
-        transform: scale(1.1);
-        color: #de4c8a;
-      }
+
+    #whatsapp-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: #25d366;
+      color: white;
+      font-size: 2.5rem;
+      border-radius: 50%;
+      padding: 12px 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      z-index: 9999;
     }
+
+    #whatsapp-btn:hover {
+      background-color: #1ebe57;
+    }
+
+    #dark-mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      user-select: none;
+      color: #b33a6c;
+      z-index: 9999;
+      transition: color 0.3s ease;
+    }
+
+    #dark-mode-toggle:hover {
+      color: #de4c8a;
+    }
+
+    body.dark {
+      background: #1e1e2f;
+      color: #f0e6f6;
+    }
+
+    body.dark h1, body.dark p, body.dark footer {
+      text-shadow: none;
+    }
+
+    body.dark .heart {
+      text-shadow:
+        0 0 8px #ff5c8d,
+        0 0 15px #ff4c78,
+        0 0 20px #ff4c78;
+    }
+
+    body.dark #whatsapp-btn {
+      background-color: #128c7e;
+    }
+
+    body.dark #whatsapp-btn:hover {
+      background-color: #0f7a68;
+    }
+
     @keyframes bouncePulse {
       0%, 100% {
         transform: translateY(0) scale(1);
@@ -72,10 +134,13 @@
         transform: translateY(-12px) scale(1.1);
       }
     }
+
     @keyframes fadeIn {
       to {opacity: 1;}
     }
+
     /* Confetti */
+
     .confetti {
       position: fixed;
       width: 8px;
@@ -86,7 +151,9 @@
       border-radius: 3px;
       pointer-events: none;
       will-change: transform;
+      z-index: 1;
     }
+
     @keyframes fall {
       0% {
         transform: translateY(-10vh) rotate(0deg);
@@ -97,7 +164,45 @@
         opacity: 0;
       }
     }
+
+    /* Shooting stars */
+
+    .shooting-star {
+      position: fixed;
+      width: 3px;
+      height: 80px;
+      background: linear-gradient(-45deg, white, rgba(255,255,255,0));
+      top: -100px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: shooting-star 2s linear infinite;
+      pointer-events: none;
+      filter: drop-shadow(0 0 2px white);
+      z-index: 1;
+    }
+
+    @keyframes shooting-star {
+      0% {
+        transform: translateX(0) translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(100vw) translateY(100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    /* Burst confetti animation */
+
+    @keyframes burst {
+      to {
+        opacity: 0;
+        transform: translate(var(--x), var(--y));
+      }
+    }
+
     /* Responsive */
+
     @media (max-width: 480px) {
       h1 {
         font-size: 2rem;
@@ -108,6 +213,16 @@
       }
       p {
         font-size: 1rem;
+      }
+      #whatsapp-btn {
+        font-size: 2rem;
+        bottom: 20px;
+        right: 20px;
+      }
+      #dark-mode-toggle {
+        font-size: 1.5rem;
+        top: 15px;
+        right: 15px;
       }
       .confetti {
         width: 5px;
@@ -122,13 +237,41 @@
   </style>
 </head>
 <body>
-  <h1>Immaculate, I love you so much</h1>
+  <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">🌙</button>
+
+  <h1 id="typed-text"></h1>
   <div class="heart">❤️</div>
   <p>Forever and always.</p>
   <footer>Made with ❤️ for Immaculate</footer>
 
+  <a href="https://wa.me/254715306691" target="_blank" id="whatsapp-btn" aria-label="Chat on WhatsApp">💬</a>
+
   <script>
-    // Create confetti pieces dynamically
+    // Typing effect
+    const message = "Immaculate, I love you so much";
+    const typedText = document.getElementById('typed-text');
+    let index = 0;
+
+    function type() {
+      if (index < message.length) {
+        typedText.textContent += message.charAt(index);
+        index++;
+        setTimeout(type, 100);
+      }
+    }
+
+    window.onload = () => {
+      type();
+    };
+
+    // Dark mode toggle
+    const toggle = document.getElementById('dark-mode-toggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      toggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    });
+
+    // Confetti falling
     const confettiCount = 30;
     for(let i = 0; i < confettiCount; i++) {
       const confetti = document.createElement('div');
@@ -140,6 +283,57 @@
       confetti.style.width = confetti.style.height = (5 + Math.random()*3) + 'px';
       document.body.appendChild(confetti);
     }
+
+    // Shooting stars
+    function createShootingStar() {
+      const star = document.createElement('div');
+      star.classList.add('shooting-star');
+      star.style.left = Math.random() * window.innerWidth + 'px';
+      star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
+      star.style.animationDuration = (1.5 + Math.random() * 1) + 's';
+      document.body.appendChild(star);
+
+      star.addEventListener('animationend', () => {
+        star.remove();
+      });
+    }
+    setInterval(createShootingStar, 1000);
+
+    // Click-to-explode confetti
+    function createBurstConfetti(x, y) {
+      const colors = ['#de4c8a', '#f48fb1', '#b33a6c', '#ffafcc', '#f8bbd0'];
+      for(let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = x + 'px';
+        confetti.style.top = y + 'px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.width = confetti.style.height = (5 + Math.random() * 5) + 'px';
+        confetti.style.position = 'fixed';
+        confetti.style.opacity = '1';
+        confetti.style.borderRadius = '3px';
+        confetti.style.pointerEvents = 'none';
+        confetti.style.animation = `burst 700ms forwards ease-out`;
+        document.body.appendChild(confetti);
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 100 + Math.random() * 100;
+        confetti.animate([
+          { transform: 'translate(0, 0)', opacity: 1 },
+          { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`, opacity: 0 }
+        ], {
+          duration: 700,
+          easing: 'ease-out',
+          fill: 'forwards'
+        });
+
+        setTimeout(() => confetti.remove(), 700);
+      }
+    }
+
+    document.body.addEventListener('click', (e) => {
+      createBurstConfetti(e.clientX, e.clientY);
+    });
   </script>
 </body>
 </html>
