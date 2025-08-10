@@ -7,7 +7,6 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@600&display=swap');
 
-  /* Base styles */
   body {
     margin: 0;
     height: 100vh;
@@ -24,12 +23,9 @@
     opacity: 0;
     animation: fadeIn 1.5s forwards;
     padding: 20px;
-    transition: background 0.5s, color 0.5s;
-    /* Removed background image here */
     filter: brightness(0.95);
   }
 
-  /* Floating initials */
   .initials {
     position: fixed;
     top: 10vh;
@@ -52,7 +48,6 @@
     100% { transform: translateY(20px) translateX(15px); }
   }
 
-  /* Heart and candle flicker */
   .heart {
     font-size: 5rem;
     margin: 15px 0;
@@ -69,7 +64,6 @@
     50% { text-shadow: 0 0 15px #ffafcc, 0 0 20px #f48fb1, 0 0 30px #ffafcc; }
   }
 
-  /* Handwriting effect */
   #typed-text {
     font-family: 'Great Vibes', cursive;
     font-size: 3rem;
@@ -126,7 +120,6 @@
     user-select: none;
     z-index: 9999;
   }
-
   #whatsapp-btn:hover {
     background-color: #1ebe57;
   }
@@ -144,7 +137,6 @@
     z-index: 9999;
     transition: color 0.3s ease;
   }
-
   #dark-mode-toggle:hover {
     color: #de4c8a;
   }
@@ -154,22 +146,18 @@
     color: #f0e6f6;
     filter: brightness(0.9);
   }
-
   body.dark h1, body.dark p, body.dark footer {
     text-shadow: none;
   }
-
   body.dark .heart {
     text-shadow:
       0 0 8px #ff5c8d,
       0 0 15px #ff4c78,
       0 0 20px #ff4c78;
   }
-
   body.dark #whatsapp-btn {
     background-color: #128c7e;
   }
-
   body.dark #whatsapp-btn:hover {
     background-color: #0f7a68;
   }
@@ -188,7 +176,6 @@
   }
 
   /* Confetti */
-
   .confetti {
     position: fixed;
     width: 8px;
@@ -201,7 +188,6 @@
     will-change: transform;
     z-index: 1;
   }
-
   @keyframes fall {
     0% {
       transform: translateY(-10vh) rotate(0deg);
@@ -214,7 +200,6 @@
   }
 
   /* Shooting stars */
-
   .shooting-star {
     position: fixed;
     width: 3px;
@@ -228,7 +213,6 @@
     filter: drop-shadow(0 0 2px white);
     z-index: 1;
   }
-
   @keyframes shooting-star {
     0% {
       transform: translateX(0) translateY(0) rotate(45deg);
@@ -241,7 +225,6 @@
   }
 
   /* Burst confetti animation */
-
   @keyframes burst {
     to {
       opacity: 0;
@@ -264,7 +247,6 @@
     z-index: 0;
     opacity: 0.7;
   }
-
   @keyframes floatUp {
     0% {
       transform: translateY(0) translateX(0) scale(1);
@@ -296,7 +278,6 @@
     font-size: 1.8rem;
     transition: background-color 0.3s ease;
   }
-
   #surprise-box:hover {
     background-color: #b33a6c;
   }
@@ -319,7 +300,6 @@
   }
 
   /* Responsive */
-
   @media (max-width: 480px) {
     h1 {
       font-size: 2rem;
@@ -357,9 +337,7 @@
       width: 10px !important;
       height: 10px !important;
     }
-    /* No background-attachment fix needed since no background image */
   }
-
 </style>
 </head>
 <body>
@@ -383,7 +361,6 @@
     const message = "Immaculate, I love you so much";
     const typedText = document.getElementById('typed-text');
     let index = 0;
-
     function type() {
       if (index < message.length) {
         typedText.textContent += message.charAt(index);
@@ -391,7 +368,6 @@
         setTimeout(type, 100);
       }
     }
-
     window.onload = () => {
       type();
     };
@@ -424,7 +400,6 @@
       star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
       star.style.animationDuration = (1.5 + Math.random() * 1) + 's';
       document.body.appendChild(star);
-
       star.addEventListener('animationend', () => {
         star.remove();
       });
@@ -447,7 +422,6 @@
         confetti.style.pointerEvents = 'none';
         confetti.style.animation = `burst 700ms forwards ease-out`;
         document.body.appendChild(confetti);
-
         const angle = Math.random() * 2 * Math.PI;
         const distance = 100 + Math.random() * 100;
         confetti.animate([
@@ -458,11 +432,9 @@
           easing: 'ease-out',
           fill: 'forwards'
         });
-
         setTimeout(() => confetti.remove(), 700);
       }
     }
-
     document.body.addEventListener('click', (e) => {
       createBurstConfetti(e.clientX, e.clientY);
     });
@@ -470,7 +442,6 @@
     // Surprise box toggle
     const surpriseBox = document.getElementById('surprise-box');
     const surpriseNote = document.getElementById('surprise-note');
-
     surpriseBox.addEventListener('click', () => {
       if (surpriseNote.style.display === 'block') {
         surpriseNote.style.display = 'none';
