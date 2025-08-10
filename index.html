@@ -57,6 +57,7 @@
       0 0 8px #de4c8a,
       0 0 15px #b33a6c,
       0 0 20px #b33a6c;
+    z-index: 2;
   }
 
   @keyframes candleFlicker {
@@ -75,6 +76,7 @@
     overflow: hidden;
     border-right: .15em solid #b33a6c;
     animation: typing 4s steps(28), blinkCaret 0.75s step-end infinite;
+    z-index: 2;
   }
   @keyframes typing {
     from { width: 0; }
@@ -90,6 +92,7 @@
     margin: 10px 0 0 0;
     font-style: italic;
     letter-spacing: 1px;
+    z-index: 2;
   }
 
   footer {
@@ -99,6 +102,7 @@
     color: #8a2e54;
     font-style: italic;
     user-select: none;
+    z-index: 2;
   }
 
   #whatsapp-btn {
@@ -118,7 +122,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     user-select: none;
-    z-index: 9999;
+    z-index: 10001;
   }
   #whatsapp-btn:hover {
     background-color: #1ebe57;
@@ -134,7 +138,7 @@
     cursor: pointer;
     user-select: none;
     color: #b33a6c;
-    z-index: 9999;
+    z-index: 10001;
     transition: color 0.3s ease;
   }
   #dark-mode-toggle:hover {
@@ -186,7 +190,7 @@
     border-radius: 3px;
     pointer-events: none;
     will-change: transform;
-    z-index: 1;
+    z-index: 0;
   }
   @keyframes fall {
     0% {
@@ -211,7 +215,7 @@
     animation: shooting-star 2s linear infinite;
     pointer-events: none;
     filter: drop-shadow(0 0 2px white);
-    z-index: 1;
+    z-index: 0;
   }
   @keyframes shooting-star {
     0% {
@@ -270,7 +274,7 @@
     box-shadow: 0 4px 8px rgba(179, 58, 108, 0.7);
     cursor: pointer;
     user-select: none;
-    z-index: 10000;
+    z-index: 10001;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -296,7 +300,7 @@
     box-shadow: 0 4px 10px rgba(179, 58, 108, 0.4);
     user-select: none;
     display: none;
-    z-index: 10001;
+    z-index: 10002;
   }
 
   /* Responsive for phones */
@@ -362,10 +366,11 @@
   <div id="surprise-note">You are my everything, Immaculate ❤️</div>
 
   <script>
-    // Typing effect
+    // Typing effect - reset content before typing
     const message = "Immaculate, I love you so much";
     const typedText = document.getElementById('typed-text');
     let index = 0;
+
     function type() {
       if (index < message.length) {
         typedText.textContent += message.charAt(index);
@@ -373,15 +378,25 @@
         setTimeout(type, 100);
       }
     }
+
     window.onload = () => {
+      typedText.textContent = '';  // Clear before typing to avoid duplication
       type();
+
+      // Load dark mode state from localStorage
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark');
+        document.getElementById('dark-mode-toggle').textContent = '☀️';
+      }
     };
 
-    // Dark mode toggle
+    // Dark mode toggle with persistence
     const toggle = document.getElementById('dark-mode-toggle');
     toggle.addEventListener('click', () => {
       document.body.classList.toggle('dark');
-      toggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+      const isDark = document.body.classList.contains('dark');
+      toggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('darkMode', isDark);
     });
 
     // Confetti falling
@@ -405,13 +420,11 @@
       star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
       star.style.animationDuration = (1.5 + Math.random() * 1) + 's';
       document.body.appendChild(star);
-      star.addEventListener('animationend', () => {
-        star.remove();
-      });
+      star.addEventListener('animationend', () => star.remove());
     }
     setInterval(createShootingStar, 1000);
 
-    // Click-to-explode confetti
+    // Click-to-explode confetti only if click is outside interactive elements
     function createBurstConfetti(x, y) {
       const colors = ['#de4c8a', '#f48fb1', '#b33a6c', '#ffafcc', '#f8bbd0'];
       for(let i = 0; i < 30; i++) {
@@ -440,7 +453,10 @@
         setTimeout(() => confetti.remove(), 700);
       }
     }
+
     document.body.addEventListener('click', (e) => {
+      // Prevent confetti burst if clicking on buttons or links
+      if (e.target.closest('button, a, #surprise-box')) return;
       createBurstConfetti(e.clientX, e.clientY);
     });
 
@@ -448,11 +464,7 @@
     const surpriseBox = document.getElementById('surprise-box');
     const surpriseNote = document.getElementById('surprise-note');
     surpriseBox.addEventListener('click', () => {
-      if (surpriseNote.style.display === 'block') {
-        surpriseNote.style.display = 'none';
-      } else {
-        surpriseNote.style.display = 'block';
-      }
+      surpriseNote.style.display = surpriseNote.style.display === 'block' ? 'none' : 'block';
     });
 
     // Floating glowing orbs
