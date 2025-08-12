@@ -5,75 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>For Emma ❤️</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap');
 
   html, body {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-family: 'Great Vibes', cursive;
     background: linear-gradient(120deg, #fce4ec, #f3e5f5);
-    animation: backgroundShift 30s ease-in-out infinite alternate;
+    animation: backgroundShift 20s ease-in-out infinite alternate;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: #8b3a62;
-    user-select: none;
   }
 
   @keyframes backgroundShift {
-    0% {
-      background: linear-gradient(120deg, #fce4ec, #f3e5f5);
-    }
-    50% {
-      background: linear-gradient(120deg, #f8bbd0, #e1bee7);
-    }
-    100% {
-      background: linear-gradient(120deg, #fce4ec, #f3e5f5);
-    }
+    0% { background: linear-gradient(120deg, #fce4ec, #f3e5f5); }
+    50% { background: linear-gradient(120deg, #f8bbd0, #e1bee7); }
+    100% { background: linear-gradient(120deg, #fce4ec, #f3e5f5); }
   }
 
   .name {
+    font-family: 'Great Vibes', cursive;
     font-size: 6rem;
-    opacity: 0;
-    animation: fadeIn 3s forwards;
     letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeZoom 3s forwards;
+    text-shadow: 0 0 15px rgba(255,255,255,0.6);
   }
 
   .message {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
     margin-top: 0.5em;
     opacity: 0;
-    color: #a65a7e;
-    animation: fadeIn 4.5s forwards;
-    animation-delay: 3s;
+    animation: fadeZoom 3s forwards;
+    animation-delay: 2s;
     text-align: center;
     max-width: 90vw;
-    user-select: text;
+    color: #a65a7e;
+    text-shadow: 0 0 10px rgba(255,255,255,0.4);
   }
 
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
+  @keyframes fadeZoom {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
   .footer {
     position: fixed;
     bottom: 15px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1rem;
     color: #754358;
     font-style: italic;
     opacity: 0;
-    animation: fadeIn 6s forwards;
-    animation-delay: 5.5s;
-    user-select: none;
+    animation: fadeZoom 2s forwards;
+    animation-delay: 4s;
   }
 
-  /* Petals container */
+  /* Petals styling */
   .petal {
     position: fixed;
     width: 15px;
@@ -82,24 +74,31 @@
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     opacity: 0.85;
     pointer-events: none;
-    animation-name: drift;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+    animation: fall linear infinite;
   }
 
-  @keyframes drift {
-    0% {
-      transform: translateY(0) rotate(0deg);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translateY(-40px) rotate(20deg);
-      opacity: 0.5;
-    }
-    100% {
-      transform: translateY(0) rotate(0deg);
-      opacity: 0.8;
-    }
+  @keyframes fall {
+    0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 1; }
+    50% { transform: translateY(50vh) translateX(20px) rotate(90deg); opacity: 0.7; }
+    100% { transform: translateY(110vh) translateX(-20px) rotate(180deg); opacity: 0; }
+  }
+
+  /* Play button fallback */
+  #playButton {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #a65a7e;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
   }
 </style>
 </head>
@@ -109,23 +108,41 @@
   <div class="message">I love you. Always.</div>
   <div class="footer">Forever yours, Peter</div>
 
+  <button id="playButton">Play Music 🎵</button>
+
+<audio id="bgMusic" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-  // Create floating petals
+  // Petals
   const petalsCount = 25;
   for (let i = 0; i < petalsCount; i++) {
     const petal = document.createElement('div');
     petal.classList.add('petal');
-
-    // Random start positions across viewport
     petal.style.left = Math.random() * window.innerWidth + 'px';
-    petal.style.top = Math.random() * window.innerHeight + 'px';
-
-    // Random animation duration and delay for natural effect
-    petal.style.animationDuration = (4 + Math.random() * 6) + 's';
-    petal.style.animationDelay = (Math.random() * 10) + 's';
-
+    petal.style.animationDuration = (8 + Math.random() * 5) + 's';
+    petal.style.animationDelay = Math.random() * 5 + 's';
     document.body.appendChild(petal);
   }
+
+  // Music autoplay
+  const music = document.getElementById("bgMusic");
+  const playButton = document.getElementById("playButton");
+
+  function tryPlayMusic() {
+    music.play().catch(() => {
+      playButton.style.display = 'block';
+    });
+  }
+
+  playButton.addEventListener('click', () => {
+    music.play();
+    playButton.style.display = 'none';
+  });
+
+  // Try to autoplay after page load
+  window.addEventListener('load', tryPlayMusic);
 </script>
 </body>
 </html>
