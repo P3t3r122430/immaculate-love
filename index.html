@@ -9,132 +9,156 @@
 
   body {
     margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
     font-family: 'Poppins', sans-serif;
+    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd);
+    background-size: 800% 800%;
+    animation: gradientShift 15s ease infinite;
     color: white;
-    overflow: hidden;
-    position: relative;
+    overflow-x: hidden;
     text-align: center;
+    position: relative;
+  }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
-  /* Soft overlay for better contrast */
-  body::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.15);
-    z-index: 0;
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    left: -220px;
+    width: 220px;
+    height: 100vh;
+    background-color: #004080;
+    padding-top: 20px;
+    z-index: 1001;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    transition: left 0.3s ease;
+  }
+  nav.open {
+    left: 0;
+  }
+  nav a {
+    display: block;
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background 0.2s ease;
+  }
+  nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
 
+  /* Menu button */
+  .menu-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: #004080;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1100;
+    transition: background 0.3s;
+  }
+  .menu-btn:hover {
+    background: #0055b3;
+  }
+
+  /* Overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+  .overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Love message */
   h1 {
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    margin: 0.5em 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  .text {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-size: clamp(2em, 4vw, 3em);
+    margin-top: 100px;
     max-width: 90%;
-    margin: 0 auto;
-    line-height: 1.4;
-    position: relative;
-    z-index: 1;
-    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: pre-wrap;
+    animation: fadeIn 2.5s ease-in-out forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .letter {
-    opacity: 0;
-    display: inline-block;
-    transform: translateY(10px);
-    animation: fadeUp 0.6s forwards;
-  }
-
-  @keyframes fadeUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .petal {
-    position: absolute;
-    background: pink;
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(45deg);
-    opacity: 0.8;
+  /* Floating hearts */
+  .hearts {
+    position: fixed;
     pointer-events: none;
+    animation: floatUp 4s linear forwards;
   }
-
-  .heart {
-    position: absolute;
-    font-size: 20px;
-    animation: floatUp 1.5s ease-out forwards;
-    pointer-events: none;
-  }
-
   @keyframes floatUp {
     0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-80px) scale(1.3); opacity: 0; }
+    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: 500px) {
+    nav {
+      width: 180px;
+    }
+    nav a {
+      font-size: 16px;
+    }
   }
 </style>
 </head>
 <body>
-  <h1>For Immaculate ❤️</h1>
-  <div class="text"></div>
+
+<div class="menu-btn" onclick="toggleMenu()">☰ Menu</div>
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<nav id="sideNav">
+  <a href="#">Home</a>
+  <a href="#">Memories</a>
+  <a href="#">Gallery</a>
+  <a href="#">Love Notes</a>
+</nav>
+
+<h1 id="loveMessage">
+  You are the most beautiful part of my life.
+  Everyday with you is a gift I cherish forever.
+</h1>
 
 <script>
-const message = "You are the most beautiful part of my life. Every day with you is a gift I cherish forever.";
-const textContainer = document.querySelector('.text');
+  function toggleMenu() {
+    document.getElementById('sideNav').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('active');
+  }
 
-[...message].forEach((char, i) => {
-  const span = document.createElement('span');
-  span.textContent = char;
-  span.classList.add('letter');
-  span.style.animationDelay = `${i * 0.05}s`;
-  textContainer.appendChild(span);
-});
-
-// Create natural petals
-function createPetal() {
-  const petal = document.createElement('div');
-  petal.classList.add('petal');
-  const size = Math.random() * 12 + 8; // 8-20px
-  petal.style.width = `${size}px`;
-  petal.style.height = `${size}px`;
-  petal.style.left = `${Math.random() * 100}vw`;
-  petal.style.background = `rgba(255, 182, 193, ${Math.random() * 0.6 + 0.4})`;
-  petal.style.animation = `fall ${Math.random() * 5 + 5}s linear`;
-  document.body.appendChild(petal);
-
-  // Keyframes per petal
-  const sway = Math.random() > 0.5 ? 1 : -1;
-  petal.animate([
-    { transform: `translateX(0) translateY(0) rotate(45deg)` },
-    { transform: `translateX(${sway * 30}px) translateY(100vh) rotate(90deg)` }
-  ], { duration: (Math.random() * 5 + 5) * 1000, iterations: 1 });
-
-  setTimeout(() => petal.remove(), 10000);
-}
-setInterval(createPetal, 400);
-
-// Click heart effect
-document.body.addEventListener('click', e => {
-  const heart = document.createElement('div');
-  heart.className = 'heart';
-  heart.textContent = '❤️';
-  heart.style.left = `${e.clientX}px`;
-  heart.style.top = `${e.clientY}px`;
-  heart.style.fontSize = `${Math.random() * 10 + 20}px`;
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 1500);
-});
+  // Floating hearts on click
+  document.body.addEventListener('click', function(e) {
+    const heart = document.createElement('div');
+    heart.textContent = '❤️';
+    heart.className = 'hearts';
+    heart.style.left = e.pageX + 'px';
+    heart.style.top = e.pageY + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  });
 </script>
+
 </body>
 </html>
