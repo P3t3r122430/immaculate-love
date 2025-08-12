@@ -3,162 +3,129 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>For Immaculate ❤️</title>
+<title>For Emma ❤️</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
-  body {
+  html, body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd);
-    background-size: 800% 800%;
-    animation: gradientShift 15s ease infinite;
-    color: white;
-    overflow-x: hidden;
-    text-align: center;
-    position: relative;
-  }
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Navigation */
-  nav {
-    position: fixed;
-    top: 0;
-    left: -220px;
-    width: 220px;
-    height: 100vh;
-    background-color: #004080;
-    padding-top: 20px;
-    z-index: 1001;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
-    transition: left 0.3s ease;
-  }
-  nav.open {
-    left: 0;
-  }
-  nav a {
-    display: block;
-    color: white;
-    padding: 15px;
-    text-decoration: none;
-    font-size: 18px;
-    transition: background 0.2s ease;
-  }
-  nav a:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  /* Menu button */
-  .menu-btn {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    background: #004080;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 1100;
-    transition: background 0.3s;
-  }
-  .menu-btn:hover {
-    background: #0055b3;
-  }
-
-  /* Overlay */
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.4);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 1000;
-  }
-  .overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  /* Love message */
-  h1 {
+    overflow: hidden;
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(2em, 4vw, 3em);
-    margin-top: 100px;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    white-space: pre-wrap;
-    animation: fadeIn 2.5s ease-in-out forwards;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    background: linear-gradient(120deg, #fce4ec, #f3e5f5);
+    animation: backgroundShift 30s ease-in-out infinite alternate;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #8b3a62;
+    user-select: none;
   }
 
-  /* Floating hearts */
-  .hearts {
-    position: fixed;
-    pointer-events: none;
-    animation: floatUp 4s linear forwards;
-  }
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-  }
-
-  /* Mobile tweaks */
-  @media (max-width: 500px) {
-    nav {
-      width: 180px;
+  @keyframes backgroundShift {
+    0% {
+      background: linear-gradient(120deg, #fce4ec, #f3e5f5);
     }
-    nav a {
-      font-size: 16px;
+    50% {
+      background: linear-gradient(120deg, #f8bbd0, #e1bee7);
+    }
+    100% {
+      background: linear-gradient(120deg, #fce4ec, #f3e5f5);
+    }
+  }
+
+  .name {
+    font-size: 6rem;
+    opacity: 0;
+    animation: fadeIn 3s forwards;
+    letter-spacing: 0.05em;
+  }
+
+  .message {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    margin-top: 0.5em;
+    opacity: 0;
+    color: #a65a7e;
+    animation: fadeIn 4.5s forwards;
+    animation-delay: 3s;
+    text-align: center;
+    max-width: 90vw;
+    user-select: text;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #754358;
+    font-style: italic;
+    opacity: 0;
+    animation: fadeIn 6s forwards;
+    animation-delay: 5.5s;
+    user-select: none;
+  }
+
+  /* Petals container */
+  .petal {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    background: radial-gradient(circle at 30% 30%, #f48fb1, #ec407a);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    opacity: 0.85;
+    pointer-events: none;
+    animation-name: drift;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes drift {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translateY(-40px) rotate(20deg);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.8;
     }
   }
 </style>
 </head>
 <body>
 
-<div class="menu-btn" onclick="toggleMenu()">☰ Menu</div>
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<nav id="sideNav">
-  <a href="#">Home</a>
-  <a href="#">Memories</a>
-  <a href="#">Gallery</a>
-  <a href="#">Love Notes</a>
-</nav>
-
-<h1 id="loveMessage">
-  You are the most beautiful part of my life.
-  Everyday with you is a gift I cherish forever.
-</h1>
+  <div class="name">Emma</div>
+  <div class="message">I love you. Always.</div>
+  <div class="footer">Forever yours, Peter</div>
 
 <script>
-  function toggleMenu() {
-    document.getElementById('sideNav').classList.toggle('open');
-    document.getElementById('overlay').classList.toggle('active');
+  // Create floating petals
+  const petalsCount = 25;
+  for (let i = 0; i < petalsCount; i++) {
+    const petal = document.createElement('div');
+    petal.classList.add('petal');
+
+    // Random start positions across viewport
+    petal.style.left = Math.random() * window.innerWidth + 'px';
+    petal.style.top = Math.random() * window.innerHeight + 'px';
+
+    // Random animation duration and delay for natural effect
+    petal.style.animationDuration = (4 + Math.random() * 6) + 's';
+    petal.style.animationDelay = (Math.random() * 10) + 's';
+
+    document.body.appendChild(petal);
   }
-
-  // Floating hearts on click
-  document.body.addEventListener('click', function(e) {
-    const heart = document.createElement('div');
-    heart.textContent = '❤️';
-    heart.className = 'hearts';
-    heart.style.left = e.pageX + 'px';
-    heart.style.top = e.pageY + 'px';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 4000);
-  });
 </script>
-
 </body>
 </html>
