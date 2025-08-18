@@ -13,19 +13,21 @@
     overflow: hidden;
   }
 
-  /* Fullscreen photo */
+  /* Fullscreen photo with slow zoom */
   .background {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     z-index: -2;
     background: url('her.jpg') no-repeat center center/cover;
-    animation: fadeIn 2s forwards;
+    animation: backgroundZoom 20s ease-in-out infinite alternate;
+  }
+  @keyframes backgroundZoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
   }
 
-  @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-
-  /* Overlay for hearts and content */
   body {
     display: flex;
     flex-direction: column;
@@ -33,10 +35,10 @@
     align-items: center;
     color: #fff;
     text-align: center;
-    background: rgba(0,0,0,0.25); /* soft overlay on top of photo */
+    background: rgba(0,0,0,0.25);
   }
 
-  /* Floating hearts */
+  /* Hearts */
   .heart {
     position: fixed;
     width: 15px;
@@ -45,23 +47,42 @@
     clip-path: polygon(50% 0%, 61% 15%, 78% 15%, 90% 25%, 90% 50%, 50% 100%, 10% 50%, 10% 25%, 22% 15%, 39% 15%);
     opacity: 0.85;
     pointer-events: none;
-    animation: floatUp linear infinite;
+    animation: floatUp linear infinite, pulse 2s ease-in-out infinite;
     z-index: -1;
   }
-
   @keyframes floatUp {
     0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
     100% { transform: translateY(-120vh) translateX(20px) rotate(360deg); opacity: 0; }
   }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
 
-  /* Text styles */
+  /* Rose petals */
+  .petal {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle at 30% 30%, #ffb6c1, #ff69b4);
+    border-radius: 50%;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: floatPetal linear infinite;
+    z-index: -1;
+  }
+  @keyframes floatPetal {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.8; }
+    100% { transform: translateY(-130vh) translateX(40px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Text */
   .name {
     font-family: 'Great Vibes', cursive;
     font-size: 5rem;
     letter-spacing: 0.05em;
     text-shadow: 0 0 15px rgba(0,0,0,0.7);
   }
-
   .message {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
@@ -69,8 +90,9 @@
     color: #ffe6f0;
     text-shadow: 0 0 10px rgba(0,0,0,0.6);
     min-height: 3rem;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
   }
-
   .footer {
     position: fixed;
     bottom: 15px;
@@ -85,30 +107,6 @@
     .name { font-size: 3rem; }
     .message { font-size: 1.4rem; }
   }
-
-  /* Music controls */
-  #playButton {
-    background: #a65a7e;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    margin-top: 15px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  }
-  #playButton:hover { background: #8a4f63; }
-
-  #audioControls {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: center;
-  }
-  #volumeSlider { width: 100px; }
 
   /* Easter egg */
   #easterEgg {
@@ -132,87 +130,65 @@
 </head>
 <body>
 
-  <!-- Background photo -->
+  <!-- Background -->
   <div class="background"></div>
 
   <div class="name">Emma</div>
   <div class="message" id="message"></div>
-
   <div class="footer">Forever yours, Peter</div>
 
-  <button id="playButton">Play Music 🎵</button>
-  <div id="audioControls" style="display:none;">
-    <button id="pauseButton">Pause</button>
-    <label for="volumeSlider">Volume:</label>
-    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
-  </div>
-
-  <iframe
-    id="soundcloudPlayer"
-    width="100%"
-    height="80"
-    scrolling="no"
-    frameborder="no"
-    allow="autoplay"
-    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1973916827&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
-    style="display:none;">
-  </iframe>
-
-  <div id="easterEgg">You found my secret message: I love you more than words can say ❤️</div>
+  <!-- Easter egg -->
+  <div id="easterEgg">You found my secret message: 💌🌸</div>
   <div id="secretSpot" title="Click me"></div>
 
 <script>
-  // Floating hearts
-  function createHearts(count) {
-    for(let i = 0; i < count; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.animationDuration = (5 + Math.random() * 7) + 's';
-      heart.style.animationDelay = (Math.random() * 10) + 's';
+  // Floating hearts and petals
+  function createFloatingElements() {
+    for(let i=0;i<20;i++){
+      const heart=document.createElement('div');
+      heart.className='heart';
+      heart.style.left=Math.random()*window.innerWidth+'px';
+      heart.style.animationDuration=(5+Math.random()*7)+'s';
+      heart.style.animationDelay=(Math.random()*10)+'s';
       document.body.appendChild(heart);
     }
-  }
-  createHearts(30);
-
-  // Typed-out message
-  const fullMessage = "I love you. Always.";
-  const messageEl = document.getElementById('message');
-  let index = 0;
-  function typeWriter() {
-    if(index < fullMessage.length) {
-      messageEl.textContent += fullMessage.charAt(index);
-      index++;
-      setTimeout(typeWriter, 100);
+    for(let i=0;i<15;i++){
+      const petal=document.createElement('div');
+      petal.className='petal';
+      petal.style.left=Math.random()*window.innerWidth+'px';
+      petal.style.animationDuration=(6+Math.random()*8)+'s';
+      petal.style.animationDelay=(Math.random()*10)+'s';
+      document.body.appendChild(petal);
     }
   }
-  typeWriter();
+  createFloatingElements();
 
-  // Audio controls
-  const playButton = document.getElementById('playButton');
-  const soundcloudPlayer = document.getElementById('soundcloudPlayer');
-  const audioControls = document.getElementById('audioControls');
-  const pauseButton = document.getElementById('pauseButton');
-  const volumeSlider = document.getElementById('volumeSlider');
+  // Dynamic messages with fade
+  const messages=[
+    "I love you. Always. ❤️",
+    "You make me smile 🌸",
+    "Thinking of you… 💫",
+    "Forever yours, Emma 🌹"
+  ];
+  const messageEl=document.getElementById('message');
+  let msgIndex=0;
 
-  playButton.addEventListener('click', () => {
-    soundcloudPlayer.style.display = 'block';
-    playButton.style.display = 'none';
-    audioControls.style.display = 'flex';
-    soundcloudPlayer.contentWindow.postMessage('{"method":"play"}', '*');
-  });
-  pauseButton.addEventListener('click', () => {
-    soundcloudPlayer.contentWindow.postMessage('{"method":"pause"}', '*');
-  });
-  volumeSlider.addEventListener('input', () => {
-    soundcloudPlayer.contentWindow.postMessage(`{"method":"setVolume","value":${volumeSlider.value}}`, '*');
-  });
+  function showMessage(){
+    messageEl.style.opacity=0;
+    setTimeout(()=>{
+      messageEl.textContent=messages[msgIndex];
+      messageEl.style.opacity=1;
+      msgIndex=(msgIndex+1)%messages.length;
+      setTimeout(showMessage,3000);
+    },500);
+  }
+  showMessage();
 
-  // Easter egg
-  const secretSpot = document.getElementById('secretSpot');
-  const easterEgg = document.getElementById('easterEgg');
-  secretSpot.addEventListener('click', () => {
-    easterEgg.style.display = easterEgg.style.display === 'block' ? 'none' : 'block';
+  // Easter egg toggle
+  const secretSpot=document.getElementById('secretSpot');
+  const easterEgg=document.getElementById('easterEgg');
+  secretSpot.addEventListener('click',()=>{
+    easterEgg.style.display=easterEgg.style.display==='block'?'none':'block';
   });
 </script>
 </body>
