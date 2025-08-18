@@ -2,8 +2,10 @@
 const messages = [
   "You make me smile ❤️",
   "Thinking of you… 🌸",
-  "Forever yours, Emma 🌟",
-  "Just us, always 💕"
+  "Forever yours 🌟",
+  "Just us, always 💕",
+  "Every day with you feels special 🌹",
+  "My heart beats for you 💖"
 ];
 
 let i = 0;
@@ -16,9 +18,9 @@ function typeMessage() {
     currentMessage += messages[i].charAt(charIndex);
     typingElement.innerHTML = currentMessage;
     charIndex++;
-    setTimeout(typeMessage, 100);
+    setTimeout(typeMessage, 90);
   } else {
-    setTimeout(eraseMessage, 2000);
+    setTimeout(eraseMessage, 2500);
   }
 }
 
@@ -27,16 +29,16 @@ function eraseMessage() {
     currentMessage = currentMessage.slice(0, -1);
     typingElement.innerHTML = currentMessage;
     charIndex--;
-    setTimeout(eraseMessage, 50);
+    setTimeout(eraseMessage, 40);
   } else {
     i = (i + 1) % messages.length;
-    setTimeout(typeMessage, 500);
+    setTimeout(typeMessage, 700);
   }
 }
 
 typeMessage();
 
-// Floating hearts and petals
+// Floating hearts, petals, roses
 const effects = document.getElementById("effects");
 const symbols = ["❤️", "💖", "🌸", "🌹"];
 
@@ -46,20 +48,21 @@ function createEffect() {
   span.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
   span.style.left = Math.random() * window.innerWidth + "px";
   span.style.top = window.innerHeight + "px";
+  span.style.fontSize = (20 + Math.random() * 20) + "px"; // random size
   effects.appendChild(span);
 
   setTimeout(() => {
     span.remove();
-  }, 8000);
+  }, 10000);
 }
-setInterval(createEffect, 800);
+setInterval(createEffect, 600);
 
 // Easter Egg
 const easterEgg = document.getElementById("easter-egg");
 setTimeout(() => {
   easterEgg.style.display = "block";
-}, 10000);
+}, 12000);
 
 easterEgg.addEventListener("click", () => {
-  alert("💌 Surprise, Emma! You are loved 💕");
+  alert("💌 Surprise, Emma! You are deeply loved 💕");
 });
