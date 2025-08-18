@@ -1,151 +1,124 @@
-// Typing messages
+// Messages that rotate
 const messages = [
-  "Hey Emma ❤️",
-  "You’re my favorite thought 💭",
-  "Even when we don’t talk, you’re still here 🌸",
-  "This page is just for you 💕",
-  "Always. Forever. Us. ✨"
+  "You’re still my world 🌍",
+  "Every heartbeat reminds me of you ❤️",
+  "Your smile lights up my sky ✨",
+  "Forever, even in silence 🌹"
 ];
-let msgIndex = 0, charIndex = 0;
-const typingText = document.getElementById("typing-text");
 
-function typeMessage() {
-  if (charIndex < messages[msgIndex].length) {
-    typingText.textContent += messages[msgIndex].charAt(charIndex);
-    charIndex++;
-    setTimeout(typeMessage, 80);
-  } else {
-    setTimeout(eraseMessage, 2000);
-  }
+let msgIndex = 0;
+function changeMessage() {
+  const messageElement = document.getElementById("message");
+  messageElement.textContent = messages[msgIndex];
+  msgIndex = (msgIndex + 1) % messages.length;
 }
-
-function eraseMessage() {
-  if (charIndex > 0) {
-    typingText.textContent = messages[msgIndex].substring(0, charIndex - 1);
-    charIndex--;
-    setTimeout(eraseMessage, 40);
-  } else {
-    msgIndex = (msgIndex + 1) % messages.length;
-    setTimeout(typeMessage, 500);
-  }
-}
-typeMessage();
-
-// Floating petals
-const petalsCanvas = document.getElementById("petals");
-const pCtx = petalsCanvas.getContext("2d");
-petalsCanvas.width = window.innerWidth;
-petalsCanvas.height = window.innerHeight;
-const petals = [];
-for (let i = 0; i < 30; i++) {
-  petals.push({
-    x: Math.random() * petalsCanvas.width,
-    y: Math.random() * petalsCanvas.height,
-    r: Math.random() * 6 + 4,
-    d: Math.random() * 2
-  });
-}
-function drawPetals() {
-  pCtx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
-  pCtx.fillStyle = "pink";
-  pCtx.beginPath();
-  petals.forEach(p => {
-    pCtx.moveTo(p.x, p.y);
-    pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
-  });
-  pCtx.fill();
-  updatePetals();
-}
-function updatePetals() {
-  petals.forEach(p => {
-    p.y += Math.cos(p.d) + 1;
-    p.x += Math.sin(p.d) * 1.5;
-    if (p.y > petalsCanvas.height) {
-      p.y = -10;
-      p.x = Math.random() * petalsCanvas.width;
-    }
-  });
-}
-setInterval(drawPetals, 33);
+setInterval(changeMessage, 3000);
+changeMessage();
 
 // Floating hearts
-const heartsCanvas = document.getElementById("hearts");
-const hCtx = heartsCanvas.getContext("2d");
+const heartsCanvas = document.getElementById("hearts-canvas");
+const heartsCtx = heartsCanvas.getContext("2d");
 heartsCanvas.width = window.innerWidth;
 heartsCanvas.height = window.innerHeight;
+
 let hearts = [];
-function drawHeart(ctx, x, y, size) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(size, size);
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.bezierCurveTo(0, -3, -5, -3, -5, 0);
-  ctx.bezierCurveTo(-5, 3, 0, 5, 0, 8);
-  ctx.bezierCurveTo(0, 5, 5, 3, 5, 0);
-  ctx.bezierCurveTo(5, -3, 0, -3, 0, 0);
-  ctx.fillStyle = "rgba(255, 0, 100, 0.6)";
-  ctx.fill();
-  ctx.restore();
+class Heart {
+  constructor() {
+    this.x = Math.random() * heartsCanvas.width;
+    this.y = heartsCanvas.height + 20;
+    this.size = Math.random() * 20 + 10;
+    this.speed = Math.random() * 1 + 0.5;
+  }
+  draw() {
+    heartsCtx.fillStyle = "rgba(255,0,100,0.6)";
+    heartsCtx.beginPath();
+    heartsCtx.moveTo(this.x, this.y);
+    heartsCtx.bezierCurveTo(this.x - this.size, this.y - this.size,
+                            this.x - this.size, this.y + this.size/2,
+                            this.x, this.y + this.size);
+    heartsCtx.bezierCurveTo(this.x + this.size, this.y + this.size/2,
+                            this.x + this.size, this.y - this.size,
+                            this.x, this.y);
+    heartsCtx.fill();
+  }
+  update() {
+    this.y -= this.speed;
+    this.draw();
+  }
 }
 function animateHearts() {
-  hCtx.clearRect(0, 0, heartsCanvas.width, heartsCanvas.height);
-  if (Math.random() < 0.05) {
-    hearts.push({
-      x: Math.random() * heartsCanvas.width,
-      y: heartsCanvas.height + 10,
-      size: Math.random() * 0.8 + 0.2,
-      speed: Math.random() * 1.5 + 0.5
-    });
-  }
+  heartsCtx.clearRect(0,0,heartsCanvas.width,heartsCanvas.height);
+  if (Math.random() < 0.05) hearts.push(new Heart());
   hearts.forEach((h, i) => {
-    drawHeart(hCtx, h.x, h.y, h.size * 5);
-    h.y -= h.speed;
-    if (h.y < -20) hearts.splice(i, 1);
+    h.update();
+    if (h.y < -10) hearts.splice(i, 1);
   });
   requestAnimationFrame(animateHearts);
 }
 animateHearts();
 
-// 3D Tilt effect
-const herPhoto = document.querySelector(".her-photo");
-document.addEventListener("mousemove", e => {
-  const x = (window.innerWidth / 2 - e.pageX) / 30;
-  const y = (window.innerHeight / 2 - e.pageY) / 30;
-  herPhoto.style.transform = `rotateY(${x}deg) rotateX(${y}deg) scale(1.02)`;
+// Petals
+const petalsCanvas = document.getElementById("petals-canvas");
+const petalsCtx = petalsCanvas.getContext("2d");
+petalsCanvas.width = window.innerWidth;
+petalsCanvas.height = window.innerHeight;
+
+let petals = [];
+class Petal {
+  constructor() {
+    this.x = Math.random() * petalsCanvas.width;
+    this.y = -20;
+    this.size = Math.random() * 15 + 10;
+    this.speed = Math.random() * 2 + 1;
+    this.angle = Math.random() * Math.PI * 2;
+  }
+  draw() {
+    petalsCtx.fillStyle = "pink";
+    petalsCtx.beginPath();
+    petalsCtx.ellipse(this.x, this.y, this.size/2, this.size, this.angle, 0, 2*Math.PI);
+    petalsCtx.fill();
+  }
+  update() {
+    this.y += this.speed;
+    this.x += Math.sin(this.y / 20);
+    this.draw();
+  }
+}
+function animatePetals() {
+  petalsCtx.clearRect(0,0,petalsCanvas.width,petalsCanvas.height);
+  if (Math.random() < 0.05) petals.push(new Petal());
+  petals.forEach((p, i) => {
+    p.update();
+    if (p.y > petalsCanvas.height + 20) petals.splice(i, 1);
+  });
+  requestAnimationFrame(animatePetals);
+}
+animatePetals();
+
+// 3D tilt effect
+const photo = document.querySelector(".background-photo");
+document.addEventListener("mousemove", (e) => {
+  let x = (window.innerWidth / 2 - e.pageX) / 50;
+  let y = (window.innerHeight / 2 - e.pageY) / 50;
+  photo.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
 });
 document.addEventListener("mouseleave", () => {
-  herPhoto.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+  photo.style.transform = `rotateY(0) rotateX(0)`;
 });
 
-// Double-tap Easter egg
+// Secret double-tap Easter egg
 let lastTap = 0;
-document.addEventListener("touchend", e => {
-  const currentTime = new Date().getTime();
-  const tapLength = currentTime - lastTap;
-  if (tapLength < 400 && tapLength > 0) {
-    triggerBigHeart();
+document.addEventListener("touchend", () => {
+  let now = new Date().getTime();
+  if (now - lastTap < 300) {
+    triggerSecretHeart();
   }
-  lastTap = currentTime;
+  lastTap = now;
 });
-document.addEventListener("dblclick", triggerBigHeart);
+document.addEventListener("dblclick", triggerSecretHeart);
 
-function triggerBigHeart() {
-  const bigHeart = document.createElement("div");
-  bigHeart.innerHTML = "❤️";
-  bigHeart.style.position = "absolute";
-  bigHeart.style.top = "50%";
-  bigHeart.style.left = "50%";
-  bigHeart.style.fontSize = "8rem";
-  bigHeart.style.transform = "translate(-50%, -50%) scale(0)";
-  bigHeart.style.transition = "transform 0.6s ease, opacity 0.8s ease";
-  bigHeart.style.opacity = "1";
-  document.body.appendChild(bigHeart);
-
-  setTimeout(() => {
-    bigHeart.style.transform = "translate(-50%, -50%) scale(1.5)";
-    bigHeart.style.opacity = "0";
-  }, 50);
-
-  setTimeout(() => bigHeart.remove(), 1000);
+function triggerSecretHeart() {
+  const heart = document.getElementById("secret-heart");
+  heart.classList.add("active");
+  setTimeout(() => heart.classList.remove("active"), 1000);
 }
