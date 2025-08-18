@@ -1,86 +1,53 @@
-// Messages
+// Messages that type out one by one
 const messages = [
-  "You’re my reason to smile 💖",
-  "Every moment with you is magic ✨",
-  "Forever feels short with you ❤️",
-  "You make my world brighter 🌍",
-  "Love you endlessly 💕"
+  "Hey love ❤️",
+  "I’m lucky to have you in my life 💫",
+  "You’re beautiful inside and out 💕",
+  "Forever my person 🌹"
 ];
 
-let messageIndex = 0;
-const messageElement = document.getElementById("message");
+const typingText = document.querySelector(".typing-text");
+let msgIndex = 0;
+let charIndex = 0;
 
-// Typewriter effect
-function typeMessage(text, i = 0) {
-  if (i < text.length) {
-    messageElement.textContent = text.substring(0, i + 1);
-    setTimeout(() => typeMessage(text, i + 1), 100);
+function typeEffect() {
+  if (charIndex < messages[msgIndex].length) {
+    typingText.textContent += messages[msgIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(typeEffect, 100);
   } else {
-    setTimeout(nextMessage, 2000);
+    setTimeout(() => {
+      typingText.textContent = "";
+      charIndex = 0;
+      msgIndex = (msgIndex + 1) % messages.length;
+      typeEffect();
+    }, 2000);
   }
 }
+typeEffect();
 
-function nextMessage() {
-  messageIndex = (messageIndex + 1) % messages.length;
-  typeMessage(messages[messageIndex]);
-}
-
-typeMessage(messages[messageIndex]);
-
-// Petals falling
+// Create floating petals
 function createPetal() {
   const petal = document.createElement("div");
   petal.classList.add("petal");
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.animationDuration = 4 + Math.random() * 3 + "s";
   document.body.appendChild(petal);
 
-  petal.style.left = Math.random() * 100 + "vw";
-  petal.style.animationDuration = 3 + Math.random() * 5 + "s";
-
-  setTimeout(() => petal.remove(), 8000);
+  setTimeout(() => petal.remove(), 7000);
 }
 setInterval(createPetal, 500);
 
-// Hearts floating
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.textContent = "❤";
-  document.body.appendChild(heart);
+// Double tap hearts + roses
+document.body.addEventListener("dblclick", (e) => {
+  const floatElem = document.createElement("div");
+  floatElem.classList.add("float");
+  floatElem.style.left = e.clientX + "px";
+  floatElem.style.top = e.clientY + "px";
 
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.top = "100vh";
+  const options = ["❤️", "🌹", "💖"];
+  floatElem.textContent = options[Math.floor(Math.random() * options.length)];
 
-  setTimeout(() => heart.remove(), 3000);
-}
-setInterval(createHeart, 2000);
-
-// 3D tilt effect
-const photo = document.getElementById("photo");
-document.addEventListener("mousemove", (e) => {
-  const x = (window.innerWidth / 2 - e.pageX) / 25;
-  const y = (window.innerHeight / 2 - e.pageY) / 25;
-  photo.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-});
-document.addEventListener("mouseleave", () => {
-  photo.style.transform = "rotateY(0deg) rotateX(0deg)";
-});
-
-// Double-tap glowing hearts (mobile)
-let lastTap = 0;
-document.addEventListener("touchend", function (e) {
-  const currentTime = new Date().getTime();
-  const tapLength = currentTime - lastTap;
-
-  if (tapLength < 300 && tapLength > 0) {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.textContent = "💖";
-    document.body.appendChild(heart);
-
-    heart.style.left = e.changedTouches[0].pageX + "px";
-    heart.style.top = e.changedTouches[0].pageY + "px";
-
-    setTimeout(() => heart.remove(), 2000);
-  }
-  lastTap = currentTime;
+  document.body.appendChild(floatElem);
+  setTimeout(() => floatElem.remove(), 4000);
 });
