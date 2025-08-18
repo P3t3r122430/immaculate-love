@@ -1,71 +1,71 @@
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  height: 100vh;
-  width: 100vw;
-  background: #000;
-  overflow: hidden;
-  font-family: "Times New Roman", serif;
-}
-
-.container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1000px;
-}
-
+/* Full screen photo */
 .photo {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
-  transition: transform 0.2s ease-out;
+  background: url("her.jpg") no-repeat center center/cover;
+  transition: transform 0.2s ease;
+  z-index: -1;
 }
 
-.message {
+/* Messages */
+.message-container {
   position: absolute;
   bottom: 10%;
   width: 100%;
   text-align: center;
-  font-size: 1.8rem;
-  color: #fff;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* Floating petals */
+#message {
+  font-size: 2rem;
+  font-family: "Times New Roman", serif;
+  color: #fff;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Petals */
 .petal {
-  position: absolute;
-  width: 20px;
-  height: 20px;
+  position: fixed;
+  top: -50px;
+  width: 15px;
+  height: 15px;
   background: pink;
   border-radius: 50%;
-  opacity: 0.7;
-  animation: fall linear infinite;
+  opacity: 0.8;
+  animation: fall linear forwards;
 }
 
 @keyframes fall {
-  0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
 }
 
-/* Floating hearts */
+/* Hearts */
 .heart {
-  position: absolute;
+  position: fixed;
+  font-size: 1.5rem;
   color: red;
-  font-size: 24px;
-  animation: floatUp 3s ease-out forwards;
+  animation: floatUp 3s ease-in forwards;
+  pointer-events: none;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150px) scale(2);
+    opacity: 0;
+  }
 }

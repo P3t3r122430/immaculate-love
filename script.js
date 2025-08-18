@@ -1,4 +1,4 @@
-// Messages to cycle through
+// Messages
 const messages = [
   "You’re my reason to smile 💖",
   "Every moment with you is magic ✨",
@@ -10,48 +10,43 @@ const messages = [
 let messageIndex = 0;
 const messageElement = document.getElementById("message");
 
-// Function to type out each message
+// Typewriter effect
 function typeMessage(text, i = 0) {
   if (i < text.length) {
     messageElement.textContent = text.substring(0, i + 1);
     setTimeout(() => typeMessage(text, i + 1), 100);
   } else {
-    setTimeout(nextMessage, 2000); // pause before next message
+    setTimeout(nextMessage, 2000);
   }
 }
 
-// Switch to the next message
 function nextMessage() {
   messageIndex = (messageIndex + 1) % messages.length;
   typeMessage(messages[messageIndex]);
 }
 
-// Start typing the first message
 typeMessage(messages[messageIndex]);
 
-// Floating petals effect
+// Petals falling
 function createPetal() {
   const petal = document.createElement("div");
   petal.classList.add("petal");
   document.body.appendChild(petal);
 
-  // Random start position and animation
   petal.style.left = Math.random() * 100 + "vw";
-  petal.style.animationDuration = 3 + Math.random() * 5 + "s"; // 3–8s
-  petal.style.opacity = Math.random();
+  petal.style.animationDuration = 3 + Math.random() * 5 + "s";
 
   setTimeout(() => petal.remove(), 8000);
 }
 setInterval(createPetal, 500);
 
-// Floating hearts effect
+// Hearts floating
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
   heart.textContent = "❤";
   document.body.appendChild(heart);
 
-  // Random start position
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.top = "100vh";
 
@@ -59,7 +54,7 @@ function createHeart() {
 }
 setInterval(createHeart, 2000);
 
-// 3D tilt effect on photo
+// 3D tilt effect
 const photo = document.getElementById("photo");
 document.addEventListener("mousemove", (e) => {
   const x = (window.innerWidth / 2 - e.pageX) / 25;
@@ -70,7 +65,7 @@ document.addEventListener("mouseleave", () => {
   photo.style.transform = "rotateY(0deg) rotateX(0deg)";
 });
 
-// Double-tap glowing heart surprise
+// Double-tap glowing hearts (mobile)
 let lastTap = 0;
 document.addEventListener("touchend", function (e) {
   const currentTime = new Date().getTime();
