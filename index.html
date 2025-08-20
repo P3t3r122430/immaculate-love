@@ -3,53 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Emma</title>
+  <title>Forever</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="loader"></div>
-    <p>Loading...</p>
-  </div>
-
-  <!-- Fullscreen background image -->
+  <!-- Background image -->
   <div class="background"></div>
 
-  <!-- Message container -->
+  <!-- Falling hearts -->
+  <div class="hearts"></div>
+
+  <!-- Message -->
   <div class="message">
-    <h1>Hello, Emma ❤️</h1>
-    <p>Welcome to something special just for you.</p>
+    <p>Forever, even in silence 🌹</p>
   </div>
 
-  <!-- Hidden Formspree notification -->
+  <!-- Hidden Formspree form -->
   <form id="visitForm" action="https://formspree.io/f/mwpqdrbw" method="POST" style="display:none;">
-    <input type="hidden" name="visitor" id="visitorField" value="">
+    <input type="hidden" name="visit" value="New visitor on site">
   </form>
 
   <script src="script.js"></script>
-  <script>
-    // Auto-send visitor info to Formspree
-    window.addEventListener("DOMContentLoaded", () => {
-      const visitForm = document.getElementById("visitForm");
-      const visitorField = document.getElementById("visitorField");
-
-      // Capture basic info
-      const visitorData = {
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        time: new Date().toLocaleString()
-      };
-
-      visitorField.value = JSON.stringify(visitorData);
-
-      // Auto-submit
-      fetch(visitForm.action, {
-        method: "POST",
-        body: new FormData(visitForm),
-        headers: { "Accept": "application/json" }
-      });
-    });
-  </script>
 </body>
 </html>

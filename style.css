@@ -1,130 +1,89 @@
-/* Fullscreen photo */
-body, html {
+/* Reset */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fullscreen background for phone view */
+body, html {
   height: 100%;
+  width: 100%;
   overflow: hidden;
-  font-family: "Times New Roman", serif;
-  background: black;
-}
-
-.container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  perspective: 1000px; /* enables 3D tilt */
-}
-
-.background-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform-style: preserve-3d;
-  transition: transform 0.2s ease-out;
-}
-
-/* Glowing pulse behind image */
-.glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255,0,100,0.4), transparent 70%);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: pulse 3s infinite;
-  z-index: 1;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.3; }
-}
-
-/* Messages */
-.message-box {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  font-size: 1.5em;
-  text-align: center;
-  z-index: 3;
-  text-shadow: 2px 2px 5px black;
-}
-
-/* Canvases */
-#hearts-canvas, #petals-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* Secret Easter Egg */
-#secret-heart {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 8em;
-  transform: translate(-50%, -50%) scale(0);
+  font-family: 'Times New Roman', serif;
+  background: #111;
   opacity: 0;
-  transition: all 0.5s ease;
-  pointer-events: none;
-  z-index: 5;
+  animation: fadeInBody 1.5s ease forwards;
 }
-#secret-heart.active {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
+
+/* Fade-in for entire body */
+@keyframes fadeInBody {
+  to {
+    opacity: 1;
+  }
 }
-/* ===== PRELOADER STYLES ===== */
-#preloader {
+
+/* Background image with responsive scaling */
+.background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
-}
-
-#preloader.hidden {
+  background: url("your-image.jpg") no-repeat center center;
+  background-size: cover;
+  object-fit: cover;
+  z-index: -2;
   opacity: 0;
-  visibility: hidden;
+  animation: fadeInBg 2s ease forwards;
+  animation-delay: 0.3s;
 }
 
-.loader {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #ccc;
-  border-top: 4px solid crimson;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 10px;
-}
-
-@keyframes spin {
+/* Fade-in for background */
+@keyframes fadeInBg {
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
 }
 
-/* Smooth fade-in for page content */
-.background, .message {
-  opacity: 0;
-  transition: opacity 1.2s ease;
+/* Overlay hearts */
+.hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
 }
 
-.show {
-  opacity: 1;
+/* Message at the bottom */
+.message {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  font-weight: bold;
+  padding: 0 10px;
+  word-wrap: break-word;
+  opacity: 0;
+  animation: fadeInText 2s ease forwards;
+  animation-delay: 1.5s;
+}
+
+/* Fade-in for text */
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Small phone adjustments */
+@media (max-width: 480px) {
+  .message {
+    font-size: 16px;
+  }
 }
