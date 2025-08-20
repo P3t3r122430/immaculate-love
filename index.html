@@ -22,5 +22,25 @@
   <div id="secret-heart">❤️</div>
 
   <script src="script.js"></script>
+
+  <!-- Visitor Notification Script -->
+  <script>
+    // Your Formspree endpoint
+    const formspreeEndpoint = "https://formspree.io/f/mwpqdrbw";
+
+    // Collect visitor info
+    const visitorInfo = {
+      url: window.location.href,
+      userAgent: navigator.userAgent,
+      time: new Date().toLocaleString()
+    };
+
+    // Send notification
+    fetch(formspreeEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(visitorInfo)
+    });
+  </script>
 </body>
 </html>
