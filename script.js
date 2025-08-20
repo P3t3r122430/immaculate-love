@@ -1,37 +1,26 @@
-// Falling hearts effect
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.innerHTML = "❤";
-  heart.style.position = "absolute";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 15 + "px";
-  heart.style.top = "-20px";
-  heart.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+// Silent visitor notification (no visible feedback to user)
+fetch("https://formspree.io/f/mwpqdrbw", {
+  method: "POST",
+  headers: {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    visited: "true",
+    timestamp: new Date().toISOString()
+  })
+}).catch(err => console.error("Tracking error:", err));
 
-  document.querySelector(".hearts").appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 5000);
-}
-
-setInterval(createHeart, 400);
-
-// Falling animation
-const style = document.createElement("style");
-style.innerHTML = `
-@keyframes fall {
-  to {
-    transform: translateY(100vh);
-    opacity: 0;
+// Back to top button logic
+const backToTop = document.getElementById("backToTop");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 200) {
+    backToTop.style.display = "block";
+  } else {
+    backToTop.style.display = "none";
   }
-}`;
-document.head.appendChild(style);
+});
 
-// Auto-submit hidden Formspree form once per visit
-window.addEventListener("load", () => {
-  const form = document.getElementById("visitForm");
-  if (form) {
-    form.submit();
-  }
+backToTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });

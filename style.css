@@ -1,89 +1,55 @@
-/* Reset */
+/* General reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Times New Roman", serif;
 }
 
-/* Fullscreen background for phone view */
-body, html {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  font-family: 'Times New Roman', serif;
-  background: #111;
-  opacity: 0;
-  animation: fadeInBody 1.5s ease forwards;
-}
-
-/* Fade-in for entire body */
-@keyframes fadeInBody {
-  to {
-    opacity: 1;
-  }
-}
-
-/* Background image with responsive scaling */
+/* Background */
 .background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("your-image.jpg") no-repeat center center;
-  background-size: cover;
-  object-fit: cover;
-  z-index: -2;
-  opacity: 0;
-  animation: fadeInBg 2s ease forwards;
-  animation-delay: 0.3s;
-}
-
-/* Fade-in for background */
-@keyframes fadeInBg {
-  to {
-    opacity: 1;
-  }
-}
-
-/* Overlay hearts */
-.hearts {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+  background: url('gallery1.jpg') no-repeat center center/cover;
   z-index: -1;
 }
 
-/* Message at the bottom */
-.message {
-  position: absolute;
-  bottom: 30px;
-  width: 100%;
+/* Content */
+.content {
   text-align: center;
-  color: white;
-  font-size: 18px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-  font-weight: bold;
-  padding: 0 10px;
-  word-wrap: break-word;
-  opacity: 0;
-  animation: fadeInText 2s ease forwards;
-  animation-delay: 1.5s;
+  padding: 80px 20px;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
 }
 
-/* Fade-in for text */
-@keyframes fadeInText {
-  to {
-    opacity: 1;
-  }
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
-/* Small phone adjustments */
-@media (max-width: 480px) {
-  .message {
-    font-size: 16px;
-  }
+p {
+  font-size: 1.2rem;
+}
+
+/* Back to top button */
+#backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  font-size: 20px;
+  border: none;
+  border-radius: 50%;
+  background: #0c6;
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.3);
+}
+
+#backToTop:hover {
+  background: #0a4;
 }
