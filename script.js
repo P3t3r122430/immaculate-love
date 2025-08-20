@@ -122,3 +122,12 @@ function triggerSecretHeart() {
   heart.classList.add("active");
   setTimeout(() => heart.classList.remove("active"), 1000);
 }
+// ===== PRELOADER SCRIPT =====
+window.addEventListener("load", () => {
+  const preloader = document.getElementById("preloader");
+  preloader.classList.add("hidden");
+
+  // Show background + message smoothly
+  document.querySelector(".background").classList.add("show");
+  document.querySelector(".message").classList.add("show");
+});

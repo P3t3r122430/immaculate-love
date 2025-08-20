@@ -3,43 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Her</title>
+  <title>For Emma</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <img src="her.jpg" alt="Her" class="background-photo">
-    <div class="glow"></div> <!-- glowing pulse -->
-    <div class="message-box">
-      <p id="message"></p>
-    </div>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+    <p>Loading...</p>
   </div>
 
-  <canvas id="hearts-canvas"></canvas>
-  <canvas id="petals-canvas"></canvas>
-  
-  <!-- Hidden Easter Egg -->
-  <div id="secret-heart">❤️</div>
+  <!-- Fullscreen background image -->
+  <div class="background"></div>
+
+  <!-- Message container -->
+  <div class="message">
+    <h1>Hello, Emma ❤️</h1>
+    <p>Welcome to something special just for you.</p>
+  </div>
+
+  <!-- Hidden Formspree notification -->
+  <form id="visitForm" action="https://formspree.io/f/mwpqdrbw" method="POST" style="display:none;">
+    <input type="hidden" name="visitor" id="visitorField" value="">
+  </form>
 
   <script src="script.js"></script>
-
-  <!-- Visitor Notification Script -->
   <script>
-    // Your Formspree endpoint
-    const formspreeEndpoint = "https://formspree.io/f/mwpqdrbw";
+    // Auto-send visitor info to Formspree
+    window.addEventListener("DOMContentLoaded", () => {
+      const visitForm = document.getElementById("visitForm");
+      const visitorField = document.getElementById("visitorField");
 
-    // Collect visitor info
-    const visitorInfo = {
-      url: window.location.href,
-      userAgent: navigator.userAgent,
-      time: new Date().toLocaleString()
-    };
+      // Capture basic info
+      const visitorData = {
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        time: new Date().toLocaleString()
+      };
 
-    // Send notification
-    fetch(formspreeEndpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(visitorInfo)
+      visitorField.value = JSON.stringify(visitorData);
+
+      // Auto-submit
+      fetch(visitForm.action, {
+        method: "POST",
+        body: new FormData(visitForm),
+        headers: { "Accept": "application/json" }
+      });
     });
   </script>
 </body>
