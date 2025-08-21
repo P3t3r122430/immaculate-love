@@ -1,48 +1,69 @@
-/* Fullscreen background photo */
+/* Fullscreen her photo */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Times New Roman", serif;
+  overflow: hidden;
+}
+
 .background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("her-photo.jpg") no-repeat center center/cover;
-  z-index: -1;
+  background: url('her.jpg') no-repeat center center/cover;
+  z-index: -2;
 }
 
-/* Roses decorations */
-.roses {
-  position: absolute;
-  width: 120px;
-  opacity: 0.9;
-}
-
-.roses.top-left {
-  top: 10px;
-  left: 10px;
-}
-
-.roses.bottom-right {
-  bottom: 10px;
-  right: 10px;
-}
-
-/* Message styling */
-.message-box {
+/* Messages */
+.message {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: white;
-  font-family: "Times New Roman", serif;
-  font-size: 1.8rem;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 20px 40px;
-  border-radius: 20px;
-  animation: fadeIn 2s ease;
+  color: #fff;
+  font-size: 2rem;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+#changing-message {
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+/* Falling roses */
+.roses {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.rose {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url('https://i.ibb.co/qxgNwK2/rose.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
 }
