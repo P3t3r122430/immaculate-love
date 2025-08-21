@@ -1,4 +1,4 @@
-// Messages that rotate
+// Messages (with typewriter effect)
 const messages = [
   "You’re still my world 🌍",
   "Every heartbeat reminds me of you ❤️",
@@ -6,14 +6,35 @@ const messages = [
   "Forever, even in silence 🌹"
 ];
 let msgIndex = 0;
+let charIndex = 0;
+const messageElement = document.getElementById("message");
 
-function changeMessage() {
-  const messageElement = document.getElementById("message");
-  messageElement.textContent = messages[msgIndex];
-  msgIndex = (msgIndex + 1) % messages.length;
+function typeMessage() {
+  if (charIndex < messages[msgIndex].length) {
+    messageElement.textContent += messages[msgIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(typeMessage, 100);
+  } else {
+    setTimeout(() => {
+      messageElement.textContent = "";
+      msgIndex = (msgIndex + 1) % messages.length;
+      charIndex = 0;
+      typeMessage();
+    }, 2000);
+  }
 }
-setInterval(changeMessage, 3000);
-changeMessage();
+typeMessage();
+
+// Days together counter
+function updateDaysTogether() {
+  const startDate = new Date("2023-01-01"); // change to your real date
+  const today = new Date();
+  const diffTime = today - startDate;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  document.getElementById("days-counter").textContent =
+    `We’ve shared ${diffDays} days of love ❤️`;
+}
+updateDaysTogether();
 
 // Floating hearts
 const heartsCanvas = document.getElementById("hearts-canvas");
@@ -104,19 +125,37 @@ document.addEventListener("mouseleave", () => {
   photo.style.transform = `rotateY(0) rotateX(0)`;
 });
 
-// Secret double-tap Easter egg
+// Secret Easter Egg unlock
 let lastTap = 0;
 document.addEventListener("touchend", () => {
   let now = new Date().getTime();
-  if (now - lastTap < 300) {
-    triggerSecretHeart();
-  }
+  if (now - lastTap < 300) triggerSecretHeart();
   lastTap = now;
 });
 document.addEventListener("dblclick", triggerSecretHeart);
 
 function triggerSecretHeart() {
   const heart = document.getElementById("secret-heart");
+  const note = document.getElementById("love-note");
   heart.classList.add("active");
+  note.classList.add("active");
   setTimeout(() => heart.classList.remove("active"), 1000);
+  setTimeout(() => note.classList.remove("active"), 4000);
 }
+
+// Music toggle
+const musicBtn = document.getElementById("music-btn");
+const music = document.getElementById("bg-music");
+let playing = false;
+
+musicBtn.addEventListener("click", () => {
+  if (playing) {
+    music.pause();
+    playing = false;
+    musicBtn.textContent = "🎵";
+  } else {
+    music.play();
+    playing = true;
+    musicBtn.textContent = "⏸️";
+  }
+});

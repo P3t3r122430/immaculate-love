@@ -9,9 +9,10 @@
 <body>
   <div class="container">
     <img src="her.jpg" alt="Her" class="background-photo">
-    <div class="glow"></div> <!-- glowing pulse -->
+    <div class="glow"></div>
     <div class="message-box">
       <p id="message"></p>
+      <p id="days-counter"></p>
     </div>
   </div>
 
@@ -20,22 +21,24 @@
   
   <!-- Hidden Easter Egg -->
   <div id="secret-heart">❤️</div>
+  <div id="love-note">You found my secret: I’ll always choose you. 💌</div>
+
+  <!-- Music toggle -->
+  <button id="music-btn">🎵</button>
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 
   <!-- Visitor Notification Script -->
   <script>
-    // Your Formspree endpoint
     const formspreeEndpoint = "https://formspree.io/f/mwpqdrbw";
-
-    // Collect visitor info
     const visitorInfo = {
       url: window.location.href,
       userAgent: navigator.userAgent,
       time: new Date().toLocaleString()
     };
-
-    // Send notification
     fetch(formspreeEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
