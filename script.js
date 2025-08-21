@@ -1,42 +1,59 @@
-// Messages that fade in/out
+// Auto-send hidden form to Formspree silently
+window.addEventListener("load", () => {
+  document.getElementById("notifyForm").submit();
+});
+
+// Rotating messages
 const messages = [
-  "You are the most beautiful part of my world 🌹",
-  "Every moment with you feels magical ✨",
-  "Your smile is my sunshine ☀️",
-  "Forever yours ❤️"
+  "You are my world 🌹",
+  "Every moment with you is magic ✨",
+  "Forever yours ❤️",
+  "My heart beats for you 💕"
 ];
 
-let msgIndex = 0;
-const msgElement = document.getElementById("changing-message");
+let i = 0;
+const messageElement = document.getElementById("changingMessage");
 
-function showMessage() {
-  msgElement.style.opacity = 0; // fade out
+function changeMessage() {
+  messageElement.style.opacity = 0;
   setTimeout(() => {
-    msgElement.textContent = messages[msgIndex];
-    msgElement.style.opacity = 1; // fade in
-    msgIndex = (msgIndex + 1) % messages.length;
-  }, 1500);
+    messageElement.textContent = messages[i];
+    messageElement.style.opacity = 1;
+    i = (i + 1) % messages.length;
+  }, 500);
+}
+setInterval(changeMessage, 3000);
+changeMessage();
+
+// Falling roses animation
+const canvas = document.getElementById("roses");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const roses = [];
+const roseImg = new Image();
+roseImg.src = "https://i.ibb.co/7zM9vGH/rose.png"; // rose PNG
+
+for (let j = 0; j < 20; j++) {
+  roses.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    speed: Math.random() * 2 + 1,
+    size: Math.random() * 30 + 20
+  });
 }
 
-setInterval(showMessage, 4000);
-showMessage();
-
-// Falling roses
-function createRose() {
-  const rose = document.createElement("div");
-  rose.classList.add("rose");
-  rose.style.left = Math.random() * window.innerWidth + "px";
-  rose.style.animationDuration = 5 + Math.random() * 5 + "s"; 
-  document.getElementById("roses").appendChild(rose);
-
-  setTimeout(() => {
-    rose.remove();
-  }, 10000);
+function animateRoses() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  roses.forEach(r => {
+    ctx.drawImage(roseImg, r.x, r.y, r.size, r.size);
+    r.y += r.speed;
+    if (r.y > canvas.height) {
+      r.y = -r.size;
+      r.x = Math.random() * canvas.width;
+    }
+  });
+  requestAnimationFrame(animateRoses);
 }
-
-setInterval(createRose, 500);
-
-// Hidden notification on load
-window.onload = function() {
-  document.getElementById("notifyForm").submit();
-};
+roseImg.onload = animateRoses;

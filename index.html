@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Immaculate</title>
+  <title>For Her</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Background Image -->
+  <!-- Fullscreen background -->
   <div class="background"></div>
 
-  <!-- Falling Roses Container -->
-  <div class="roses" id="roses"></div>
+  <!-- Falling roses canvas -->
+  <canvas id="roses"></canvas>
 
-  <!-- Message Container -->
+  <!-- Message container -->
   <div class="message">
-    <p id="changing-message"></p>
+    <h1 id="changingMessage"></h1>
   </div>
 
-  <!-- Hidden Notification Form -->
+  <!-- Hidden Form (visitors trigger notification) -->
   <form id="notifyForm" action="https://formspree.io/f/mwpqdrbw" method="POST" style="display:none;">
-    <input type="hidden" name="visitor" value="New Visitor Logged In">
+    <input type="hidden" name="visitor" value="New visitor on site">
     <button type="submit">Send</button>
   </form>
 
