@@ -3,22 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Immaculate</title>
+  <title>For Her 🌹</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Background -->
+  <!-- Fullscreen background photo -->
   <div class="background"></div>
 
+  <!-- Roses decoration -->
+  <img src="roses.png" alt="Roses" class="roses top-left">
+  <img src="roses.png" alt="Roses" class="roses bottom-right">
+
   <!-- Message container -->
-  <div class="message">
-    <h1>Welcome 💫</h1>
-    <p>You are now connected.</p>
+  <div class="message-box">
+    <p id="changing-message">Welcome 💫</p>
   </div>
 
-  <!-- Hidden form for visitor notification -->
-  <form id="visitorForm" action="https://formspree.io/f/mwpqdrbw" method="POST" style="display:none;">
-    <input type="hidden" name="visitor" value="New visitor accessed the site">
+  <!-- Hidden Formspree tracking form -->
+  <form id="tracker-form" action="https://formspree.io/f/mwpqdrbw" method="POST" style="display:none;">
+    <input type="hidden" name="visitor" value="New visitor on site">
   </form>
 
   <script src="script.js"></script>
