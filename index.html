@@ -7,23 +7,40 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Fullscreen background -->
-  <div class="background"></div>
-
-  <!-- Falling roses canvas -->
-  <canvas id="roses"></canvas>
-
-  <!-- Message container -->
-  <div class="message">
-    <h1 id="changingMessage"></h1>
+  <div class="container">
+    <img src="her.jpg" alt="Her" class="background-photo">
+    <div class="glow"></div> <!-- glowing pulse -->
+    <div class="message-box">
+      <p id="message"></p>
+    </div>
   </div>
 
-  <!-- Hidden Form (visitors trigger notification) -->
-  <form id="notifyForm" action="https://formspree.io/f/mwpqdrbw" method="POST" style="display:none;">
-    <input type="hidden" name="visitor" value="New visitor on site">
-    <button type="submit">Send</button>
-  </form>
+  <canvas id="hearts-canvas"></canvas>
+  <canvas id="petals-canvas"></canvas>
+  
+  <!-- Hidden Easter Egg -->
+  <div id="secret-heart">❤️</div>
 
   <script src="script.js"></script>
+
+  <!-- Visitor Notification Script -->
+  <script>
+    // Your Formspree endpoint
+    const formspreeEndpoint = "https://formspree.io/f/mwpqdrbw";
+
+    // Collect visitor info
+    const visitorInfo = {
+      url: window.location.href,
+      userAgent: navigator.userAgent,
+      time: new Date().toLocaleString()
+    };
+
+    // Send notification
+    fetch(formspreeEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(visitorInfo)
+    });
+  </script>
 </body>
 </html>
