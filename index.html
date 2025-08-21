@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bright Cyber Cafe</title>
+  <title>Immaculate</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Background -->
   <div class="background"></div>
 
-  <!-- Main content -->
-  <div class="content">
-    <h1>Welcome to Bright Cyber Cafe</h1>
-    <p>Your trusted partner for browsing, printing, and computer training.</p>
+  <!-- Message container -->
+  <div class="message">
+    <h1>Welcome 💫</h1>
+    <p>You are now connected.</p>
   </div>
 
-  <!-- Back to top button -->
-  <button id="backToTop">↑</button>
+  <!-- Hidden form for visitor notification -->
+  <form id="visitorForm" action="https://formspree.io/f/mwpqdrbw" method="POST" style="display:none;">
+    <input type="hidden" name="visitor" value="New visitor accessed the site">
+  </form>
 
   <script src="script.js"></script>
 </body>
